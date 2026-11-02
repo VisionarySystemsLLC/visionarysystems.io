@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About Visionary Systems</title>
+<meta name="description" content="Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap">
+<a class="lockup" href="index.html" aria-label="Visionary Systems home"><svg class="mark" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
+<defs>
+<mask id="rm-h"><rect width="200" height="200" fill="#fff"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#000" stroke-width="15" fill="none"/></mask>
+<mask id="gm-h"><rect width="200" height="200" fill="#fff"/><ellipse cx="100" cy="100" rx="19" ry="79" stroke="#000" stroke-width="14" fill="none"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#fff" stroke-width="15" fill="none"/></mask>
+</defs>
+<ellipse cx="100" cy="100" rx="19" ry="79" stroke="var(--star)" stroke-width="6.5" fill="none" mask="url(#rm-h)"/>
+<circle cx="100" cy="100" r="44" stroke="var(--gold)" stroke-width="10" fill="none" mask="url(#gm-h)"/>
+</svg><span class="wordmark">Visionary <span>Systems</span></span></a>
+<nav class="site-nav" aria-label="Site"><a href="scan.html">The Scan</a><a href="visionary.html">The Visionary</a><a href="about.html" aria-current="page">About</a></nav>
+</div></header>
+<main>
+<section class="band"><div class="wrap">
+<div class="band-head">
+<h1>About</h1>
+<p class="lede">Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.</p>
+</div>
+<div class="prose">
+<p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one magazine, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
+
+<h2>The founder</h2>
+<p>The founder goes by Morgan. He came to psychometrics the way most of its enthusiasts do, by finding the testing communities online in early 2025 and reading past the point of casual interest. The Scan began as a question about what the standard batteries leave out, particularly for people with uneven profiles, and became an instrument when no existing test answered it.</p>
+
+<h2>How this is made</h2>
+<p>The Scan's items were built with AI assistance and vetted by hand; they are original to the instrument and drawn from no existing test. The writing is drafted with an AI assistant as well. The arguments, the verification, and the decisions are the founder's, and anything on this site that can be checked is meant to be.</p>
+
+<h2>Contact</h2>
+<p>Questions about the Scan, the publication, or the calibration are welcome. Replies come from a person.</p>
+<div class="contact"><code id="contact-email">morgan@visionarysystems.io</code><button type="button" data-copy="morgan@visionarysystems.io" data-target="contact-email">Copy</button></div>
+<p style="margin-top:1.2rem">The founder also writes as <a href="https://www.reddit.com/user/VisionarySystems/" rel="noopener">u/VisionarySystems</a> on Reddit, where the calibration series was first published.</p>
+</div>
+</div></section>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div>
+<a class="lockup" href="index.html" aria-label="Visionary Systems home"><svg class="mark" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
+<defs>
+<mask id="rm-f"><rect width="200" height="200" fill="#fff"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#000" stroke-width="15" fill="none"/></mask>
+<mask id="gm-f"><rect width="200" height="200" fill="#fff"/><ellipse cx="100" cy="100" rx="19" ry="79" stroke="#000" stroke-width="14" fill="none"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#fff" stroke-width="15" fill="none"/></mask>
+</defs>
+<ellipse cx="100" cy="100" rx="19" ry="79" stroke="var(--star)" stroke-width="6.5" fill="none" mask="url(#rm-f)"/>
+<circle cx="100" cy="100" r="44" stroke="var(--gold)" stroke-width="10" fill="none" mask="url(#gm-f)"/>
+</svg><span class="wordmark">Visionary <span>Systems</span></span></a>
+<div class="colophon">
+<p>Provisional. Norms in calibration.</p>
+<p>Visionary Systems LLC, Greenville, South Carolina. &copy; 2026.</p>
+<p>Written and run by <a href="about.html">one person</a>, with an AI assistant for drafting. The arguments, the verification, and the instrument are his.</p>
+</div>
+</div>
+<nav aria-label="Footer">
+<a href="scan.html">The Visionary Psychometric Scan</a>
+<a href="visionary.html">The Visionary</a>
+<a href="about.html">About and contact</a>
+<a href="https://www.reddit.com/user/VisionarySystems/" rel="noopener">u/VisionarySystems on Reddit</a>
+</nav>
+</div></footer>
+<script>
+(function () {
+  // Subscribe form: until the list is connected, explain instead of posting nowhere.
+  var form = document.getElementById("subscribe-form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      if (form.getAttribute("action").indexOf("YOUR-BUTTONDOWN-USERNAME") !== -1) {
+        e.preventDefault();
+        var n = document.getElementById("subscribe-notice");
+        if (n) { n.hidden = false; n.focus && n.focus(); }
+      }
+    });
+  }
+  // Copy buttons for the contact address.
+  var buttons = document.querySelectorAll("[data-copy]");
+  Array.prototype.forEach.call(buttons, function (b) {
+    b.addEventListener("click", function () {
+      var text = b.getAttribute("data-copy");
+      var done = function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1800); };
+      var fallback = function () {
+        var el = document.getElementById(b.getAttribute("data-target"));
+        if (!el) return;
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        b.textContent = "Selected";
+        setTimeout(function () { b.textContent = "Copy"; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  });
+  // Deep field behind the hero, drawn once from a fixed seed so it is the same sky every visit.
+  var c = document.getElementById("field");
+  if (c && c.getContext) {
+    var ctx = c.getContext("2d");
+    function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+    function draw() {
+      var r = c.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      c.width = Math.floor(r.width * dpr); c.height = Math.floor(r.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, r.width, r.height);
+      var rnd = seeded(1618);
+      var n = Math.round(r.width * r.height / 7000);
+      for (var i = 0; i < n; i++) {
+        var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
+        ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
+        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
+        ctx.fill();
+      }
+      var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
+      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
+      for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
+      ctx.stroke();
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+    }
+    draw();
+    var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });
+  }
+})();
+</script>
+</body>
+</html>
