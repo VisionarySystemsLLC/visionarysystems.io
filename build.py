@@ -224,7 +224,7 @@ def index_page(prefix=""):
 <div class="wrap">
 <div class="hero-text">
 <h1>What tests can and can't tell you.</h1>
-<p class="lede">Visionary Systems is a small psychometrics observatory in Greenville, South Carolina. It builds the Visionary Psychometric Scan, an untimed reasoning instrument now in beta calibration, and it publishes The Visionary, a magazine written from inside that calibration.</p>
+<p class="lede">Visionary Systems is a small psychometrics observatory in Greenville, South Carolina. It builds the Visionary Psychometric Scan, an untimed reasoning instrument now in beta calibration, and it publishes The Visionary, a publication written from inside that calibration.</p>
 <div class="actions">
 <a class="button button-primary" href="{prefix}scan.html">How the Scan works</a>
 <a class="button button-ghost" href="{prefix}visionary.html#subscribe">Get the first issue</a>
@@ -349,7 +349,7 @@ def visionary_page(prefix=""):
     body = f'''<section class="band"><div class="wrap">
 <div class="band-head">
 <h1>The Visionary</h1>
-<p class="lede">A magazine about psychometrics, written from inside an instrument's calibration.</p>
+<p class="lede">A publication on psychometrics, written from inside an instrument's calibration.</p>
 </div>
 <div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
@@ -367,7 +367,7 @@ def visionary_page(prefix=""):
 <div id="subscribe" style="margin-top:2.6rem">{subscribe_block()}</div>
 </div></section>'''
     return page("The Visionary", body, "visionary", prefix,
-                "The Visionary is a magazine about psychometrics, written from inside the calibration of an untimed reasoning instrument. Launching March 2027, with The Calibration Series as its precursor.")
+                "The Visionary is a publication on psychometrics, written from inside the calibration of an untimed reasoning instrument. Launching March 2027, with The Calibration Series as its precursor.")
 
 def about_page(prefix=""):
     body = f'''<section class="band"><div class="wrap">
@@ -376,7 +376,7 @@ def about_page(prefix=""):
 <p class="lede">Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.</p>
 </div>
 <div class="prose">
-<p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one magazine, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
+<p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one periodical, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
 
 <h2>The founder</h2>
 <p>The founder goes by Morgan. He came to psychometrics the way most of its enthusiasts do, by finding the testing communities online in early 2025 and reading past the point of casual interest. The Scan began as a question about what the standard batteries leave out, particularly for people with uneven profiles, and became an instrument when no existing test answered it.</p>
