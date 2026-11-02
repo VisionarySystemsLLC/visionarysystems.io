@@ -144,7 +144,7 @@ def page(title, body, current, prefix="", description=""):
 def subscribe_block():
     return f'''<div class="subscribe">
 <h2>The first issue</h2>
-<p>Issues resume in March 2027. The simplest way to hear about the first one is to follow <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a>, where every piece is announced. If you would rather get one email when it goes out, send a note to the address below and you will be added by hand.</p>
+<p>The Visionary launches in March 2027. The simplest way to hear about the first issue is to follow <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a>, where every piece is announced. If you would rather get one email when it goes out, send a note to the address below and you will be added by hand.</p>
 <div class="contact"><code id="issue-email">{EMAIL}</code><button type="button" data-copy="{EMAIL}" data-target="issue-email">Copy</button></div>
 <p class="note">Your address is used for that one note and nothing else.</p>
 </div>'''
@@ -253,10 +253,10 @@ def index_page(prefix=""):
 <section class="band band-raised"><div class="wrap">
 <div class="band-head">
 <h2>The Visionary</h2>
-<p class="kicker">Issues resume in March 2027</p>
+<p class="kicker">Launching March 2027</p>
 </div>
 <div class="prose">
-<p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. Its first four pieces came out of the Scan's calibration and were published on r/cognitiveTesting, where the arguments got tested in the comments. They are archived here with their original dates.</p>
+<p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. It launches in March 2027. Until then, The Calibration Series runs here as its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here with its original date.</p>
 </div>
 <div style="margin-top:1.6rem">{essay_list(prefix)}</div>
 <p style="margin-top:1.4rem"><a href="{prefix}visionary.html">About the publication, The Scrolls, and how to subscribe.</a></p>
@@ -353,7 +353,7 @@ def visionary_page(prefix=""):
 </div>
 <div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
-<p>Issues resume in March 2027. The four pieces below came out of the Scan's calibration and were argued over on r/cognitiveTesting; they are the archive until then.</p>
+<p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
 </div>
 
 <h2 style="margin-top:2.4rem">The Calibration Series</h2>
@@ -367,7 +367,7 @@ def visionary_page(prefix=""):
 <div id="subscribe" style="margin-top:2.6rem">{subscribe_block()}</div>
 </div></section>'''
     return page("The Visionary", body, "visionary", prefix,
-                "The Visionary is a magazine about psychometrics, written from inside the calibration of an untimed reasoning instrument. Issues resume in March 2027.")
+                "The Visionary is a magazine about psychometrics, written from inside the calibration of an untimed reasoning instrument. Launching March 2027, with The Calibration Series as its precursor.")
 
 def about_page(prefix=""):
     body = f'''<section class="band"><div class="wrap">

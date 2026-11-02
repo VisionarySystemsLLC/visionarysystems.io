@@ -36,8 +36,8 @@ Or send the posted text and permalink to Claude, which does the same steps and p
 ## Everything else
 
 - Site copy lives in `build.py` (home, the Scan, The Visionary, About). Edit there, rebuild, push.
-- There is no signup form on purpose. Ghost collects subscribers once the publication launches in March 2027; until then the publication page points people to the Reddit account and the contact address.
+- There is no signup form on purpose. Ghost collects subscribers once the publication launches in March 2027; until then the publication page points people to the Reddit account and the contact address. The Calibration Series continues monthly as the precursor.
 - The calibration numbers (47 started, 8 finished, 6 reached The Zenith) are from the September note. Update them in `build.py` when the next note publishes.
-- "Issues resume in March 2027" appears in three places in `build.py`. Change them together.
+- "Launching March 2027" framing appears in three places in `build.py` (home kicker and paragraph, publication page, first-issue note). Change them together.
 - GitHub Pages settings: source is the `main` branch, folder `/docs`, custom domain `visionarysystems.io`. `docs/CNAME` is written by the build, so never delete it.
 - DNS at the registrar: four `A` records on the apex pointing to 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153, and a `CNAME` for `www` pointing to `visionarysystemsllc.github.io`.
