@@ -12,7 +12,6 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 BETA_URL = "https://research.sc/participant/login/dynamic/3AC727A6-CAA0-4049-9772-535E51EFFEBC"
 REDDIT_PROFILE = "https://www.reddit.com/user/VisionarySystems/"
 EMAIL = "morgan@visionarysystems.io"
-BUTTONDOWN = "https://buttondown.com/api/emails/embed-subscribe/YOUR-BUTTONDOWN-USERNAME"
 
 def mark(suffix, cls="mark"):
     return f'''<svg class="{cls}" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
@@ -144,16 +143,10 @@ def page(title, body, current, prefix="", description=""):
 
 def subscribe_block():
     return f'''<div class="subscribe">
-<h2>Get the first issue</h2>
-<p>One email when The Visionary resumes in March 2027, then issues as they publish. No digests, no drip.</p>
-<form id="subscribe-form" action="{BUTTONDOWN}" method="post">
-<label for="subscribe-email">Email address</label>
-<input id="subscribe-email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-<input type="hidden" name="embed" value="1">
-<button class="button button-primary" type="submit">Subscribe</button>
-</form>
-<p class="note">Your address is used for the publication and nothing else.</p>
-<p class="notice" id="subscribe-notice" tabindex="-1" hidden>The list opens with the first issue. Until it does, send a note to {EMAIL} and you will be added by hand.</p>
+<h2>The first issue</h2>
+<p>Issues resume in March 2027. The simplest way to hear about the first one is to follow <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a>, where every piece is announced. If you would rather get one email when it goes out, send a note to the address below and you will be added by hand.</p>
+<div class="contact"><code id="issue-email">{EMAIL}</code><button type="button" data-copy="{EMAIL}" data-target="issue-email">Copy</button></div>
+<p class="note">Your address is used for that one note and nothing else.</p>
 </div>'''
 
 def essay_list(prefix):

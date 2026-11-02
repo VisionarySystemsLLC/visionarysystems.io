@@ -36,7 +36,7 @@ Or send the posted text and permalink to Claude, which does the same steps and p
 ## Everything else
 
 - Site copy lives in `build.py` (home, the Scan, The Visionary, About). Edit there, rebuild, push.
-- The subscribe form posts to Buttondown. Replace `YOUR-BUTTONDOWN-USERNAME` in `build.py` with the real username once the account exists; until then the form shows a notice asking people to email.
+- There is no signup form on purpose. Ghost collects subscribers once the publication launches in March 2027; until then the publication page points people to the Reddit account and the contact address.
 - The calibration numbers (47 started, 8 finished, 6 reached The Zenith) are from the September note. Update them in `build.py` when the next note publishes.
 - "Issues resume in March 2027" appears in three places in `build.py`. Change them together.
 - GitHub Pages settings: source is the `main` branch, folder `/docs`, custom domain `visionarysystems.io`. `docs/CNAME` is written by the build, so never delete it.
