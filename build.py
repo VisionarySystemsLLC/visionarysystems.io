@@ -116,17 +116,38 @@ SCRIPT = r'''<script>
 })();
 </script>'''
 
-def page(title, body, current, prefix="", description=""):
-    desc = f'<meta name="description" content="{html.escape(description)}">' if description else ""
+SITE = "https://visionarysystems.io"
+
+def page(title, body, current, prefix="", description="", path="index.html"):
+    desc = html.escape(description) if description else "Visionary Systems builds the Visionary Psychometric Scan and publishes The Visionary."
+    url = f"{SITE}/{path}" if path != "index.html" else f"{SITE}/"
+    head = f'''<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{html.escape(title)}</title>
+<meta name="description" content="{desc}">
+<meta name="theme-color" content="#0A1628">
+<link rel="canonical" href="{url}">
+<link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{prefix}assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{prefix}assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Visionary Systems">
+<meta property="og:title" content="{html.escape(title)}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{SITE}/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{html.escape(title)}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{SITE}/assets/og-image.png">
+{FONTS}
+<link rel="stylesheet" href="{prefix}style.css">'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{html.escape(title)}</title>
-{desc}
-{FONTS}
-<link rel="stylesheet" href="{prefix}style.css">
+{head}
 </head>
 <body>
 {header(current, prefix)}
@@ -278,7 +299,7 @@ def index_page(prefix=""):
 </div>
 </div></section>'''
     return page("Visionary Systems", body, "home", prefix,
-                "Visionary Systems builds the Visionary Psychometric Scan, an untimed reasoning instrument in beta calibration, and publishes The Visionary.")
+                "Visionary Systems builds the Visionary Psychometric Scan, an untimed reasoning instrument in beta calibration, and publishes The Visionary.", "index.html")
 
 def scan_page(prefix=""):
     body = f'''<section class="band"><div class="wrap">
@@ -306,13 +327,13 @@ def scan_page(prefix=""):
 {tiermap()}
 
 <h2 style="margin-top:2.6rem">Three choices that set it apart</h2>
-<div class="prose">
-<h3>No clock</h3>
-<p>Timing constraints reward speed, and speed is not the ability the Scan exists to measure. Removing the clock and allowing a scratchpad takes cognitive proficiency out of the equation as far as a reasoning instrument can, which matters most for people with uneven profiles, whose reasoning often needs more time to show up than a timed format allows. The costs are real, and they are stated: fixation on a hard item, the opportunity to consult a model, and fatigue over a long session. <a href="{prefix}essays/speed-is-not-ability.html">The full argument is in the publication.</a></p>
-<h3>No outside knowledge</h3>
-<p>Nothing on the Scan rewards having read the right book. Where a coordinate touches language, it tests inference from the material in front of you rather than recall of material you brought with you.</p>
-<h3>A fifth coordinate</h3>
-<p>Integrative intelligence, meaning reasoning across domains, is included as a coordinate because the ability seems real and underexamined. It ships labeled exploratory, and it stays labeled that way until the data says otherwise.</p>
+<div class="choices">
+<div><h3>No clock</h3>
+<p>Timing constraints reward speed, and speed is not the ability the Scan exists to measure. Removing the clock and allowing a scratchpad takes cognitive proficiency out of the equation as far as a reasoning instrument can, which matters most for people with uneven profiles, whose reasoning often needs more time to show up than a timed format allows. The costs are real, and they are stated: fixation on a hard item, the opportunity to consult a model, and fatigue over a long session. <a href="{prefix}essays/speed-is-not-ability.html">The full argument is in the publication.</a></p></div>
+<div><h3>No outside knowledge</h3>
+<p>Nothing on the Scan rewards having read the right book. Where a coordinate touches language, it tests inference from the material in front of you rather than recall of material you brought with you.</p></div>
+<div><h3>A fifth coordinate</h3>
+<p>Integrative intelligence, meaning reasoning across domains, is included as a coordinate because the ability seems real and underexamined. It ships labeled exploratory, and it stays labeled that way until the data says otherwise.</p></div>
 </div>
 
 <h2 style="margin-top:2.6rem">Taking the Beta</h2>
@@ -343,7 +364,7 @@ def scan_page(prefix=""):
 </div>
 </div></section>'''
     return page("The Visionary Psychometric Scan", body, "scan", prefix,
-                "An untimed, adaptive reasoning battery for the high range, in beta calibration. What it measures, how it is built, and how to take the Beta.")
+                "An untimed, adaptive reasoning battery for the high range, in beta calibration. What it measures, how it is built, and how to take the Beta.", "scan.html")
 
 def visionary_page(prefix=""):
     body = f'''<section class="band"><div class="wrap">
@@ -367,7 +388,7 @@ def visionary_page(prefix=""):
 <div id="subscribe" style="margin-top:2.6rem">{subscribe_block()}</div>
 </div></section>'''
     return page("The Visionary", body, "visionary", prefix,
-                "The Visionary is a publication on psychometrics, written from inside the calibration of an untimed reasoning instrument. Launching March 2027, with The Calibration Series as its precursor.")
+                "The Visionary is a publication on psychometrics, written from inside the calibration of an untimed reasoning instrument. Launching March 2027, with The Calibration Series as its precursor.", "visionary.html")
 
 def about_page(prefix=""):
     body = f'''<section class="band"><div class="wrap">
@@ -387,11 +408,20 @@ def about_page(prefix=""):
 <h2>Contact</h2>
 <p>Questions about the Scan, the publication, or the calibration are welcome. Replies come from a person.</p>
 <div class="contact"><code id="contact-email">{EMAIL}</code><button type="button" data-copy="{EMAIL}" data-target="contact-email">Copy</button></div>
-<p style="margin-top:1.2rem">The founder also writes as <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a> on Reddit, where the calibration series was first published.</p>
+<p style="margin-top:1.2rem">The founder also writes as <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a> on Reddit, where The Calibration Series is first published.</p>
 </div>
 </div></section>'''
     return page("About Visionary Systems", body, "about", prefix,
-                "Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.")
+                "Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.", "about.html")
+
+def notfound_page():
+    # Served by GitHub Pages for any missing path, at any depth, so every link is absolute.
+    body = f'''<section class="notfound"><div class="wrap">
+{mark("nf")}
+<h1>Nothing at this address.</h1>
+<p>The page may have moved when the site was rebuilt. <a href="/">The home page</a> has everything that exists.</p>
+</div></section>'''
+    return page("Page not found", body, "none", "/", "Nothing at this address.", "404.html")
 
 def essay_page(e, index):
     prefix = "../"
@@ -411,7 +441,7 @@ def essay_page(e, index):
 <p>Part of <a href="{prefix}visionary.html">The Visionary</a>. The instrument discussed here is the <a href="{prefix}scan.html">Visionary Psychometric Scan</a>, in beta calibration.</p>
 </div></div></footer>
 </article>'''
-    return page(e["title"], body, "visionary", prefix, e["summary"])
+    return page(e["title"], body, "visionary", prefix, e["summary"], f"essays/{e['slug']}.html")
 
 # ---------- Build ----------
 
@@ -423,6 +453,7 @@ def build():
     css = open(os.path.join(SRC, "style.css"), encoding="utf-8").read()
 
     pages = {
+        "404.html": notfound_page(),
         "index.html": index_page(),
         "scan.html": scan_page(),
         "visionary.html": visionary_page(),
@@ -437,6 +468,15 @@ def build():
     shutil.copy(os.path.join(SRC, "style.css"), os.path.join(DIST, "style.css"))
     open(os.path.join(DIST, "CNAME"), "w").write("visionarysystems.io\n")
     open(os.path.join(DIST, ".nojekyll"), "w").write("")
+    shutil.copytree(os.path.join(SRC, "assets"), os.path.join(DIST, "assets"))
+    open(os.path.join(DIST, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
+    urls = [n for n in pages if n != "404.html"]
+    sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for n in urls:
+        loc = f"{SITE}/" if n == "index.html" else f"{SITE}/{n}"
+        sm.append(f"  <url><loc>{loc}</loc></url>")
+    sm.append("</urlset>")
+    open(os.path.join(DIST, "sitemap.xml"), "w").write("\n".join(sm) + "\n")
 
     # Artifact variant: same pages, except index is published without a document skeleton
     # (the Artifact tool wraps it) and with the stylesheet inlined.
@@ -451,6 +491,7 @@ def build():
         with open(os.path.join(ART, name), "w", encoding="utf-8") as f:
             f.write(content)
     shutil.copy(os.path.join(SRC, "style.css"), os.path.join(ART, "style.css"))
+    shutil.copytree(os.path.join(SRC, "assets"), os.path.join(ART, "assets"))
     print("built", len(pages), "pages")
 
 if __name__ == "__main__":

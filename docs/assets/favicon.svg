@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" rx="28" fill="#0A1020"/>
+<defs>
+<mask id="rm"><rect width="200" height="200" fill="#fff"></rect><path d="M 63.1 123.96 A 44 44 0 0 0 136.9 123.96" stroke="#000" stroke-width="20" fill="none"></path></mask>
+<mask id="gm"><rect width="200" height="200" fill="#fff"></rect><ellipse cx="100" cy="100" rx="21" ry="79" stroke="#000" stroke-width="19" fill="none"></ellipse><path d="M 63.1 123.96 A 44 44 0 0 0 136.9 123.96" stroke="#fff" stroke-width="20" fill="none"></path></mask>
+</defs>
+<ellipse cx="100" cy="100" rx="21" ry="79" stroke="#EEF2FF" stroke-width="9" fill="none" mask="url(#rm)"></ellipse>
+<circle cx="100" cy="100" r="44" stroke="#FFB830" stroke-width="13" fill="none" mask="url(#gm)"></circle>
+</svg>
