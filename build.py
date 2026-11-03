@@ -28,26 +28,29 @@ def mark_body(suffix):
 
 def mark(suffix, cls="mark", spark=False):
     # The spark rides the ring once every nine seconds and passes behind the lens where the ring does.
-    sp = (f'<g mask="url(#gm-{suffix})"><circle class="spark" r="3.4" fill="var(--gold-hot)">'
-          f'<animateMotion dur="9s" repeatCount="indefinite" path="M 144 100 A 44 44 0 1 1 56 100 A 44 44 0 1 1 144 100"/></circle></g>') if spark else ""
+    orbit = "M 144 100 A 44 44 0 1 1 56 100 A 44 44 0 1 1 144 100"
+    sp = (f'<g mask="url(#gm-{suffix})">'
+          + "".join(f'<circle class="spark" r="{r}" fill="var(--gold-hot)" fill-opacity="{o}"><animateMotion dur="9s" begin="{b}s" repeatCount="indefinite" path="{orbit}"/></circle>'
+                    for r, o, b in [(2.0, 0.25, -0.5), (2.8, 0.5, -0.25), (4.0, 1, 0)])
+          + "</g>") if spark else ""
     return f'''<svg class="{cls}" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
 {mark_body(suffix)}{sp}
 </svg>'''
 
 def observer(suffix, with_mark=True, cls="observer"):
     """The figure at the eyepiece from the brand kit, as inline SVG so it takes the page's colors."""
-    sky = (f'<g class="obs-sky" transform="translate(236 16) scale(0.19)">{mark_body("ob" + suffix)}</g>') if with_mark else ""
+    sky = (f'<g class="obs-sky" transform="translate(293 17) scale(0.19)">{mark_body("ob" + suffix)}</g>') if with_mark else ""
     stars = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{c}" fill-opacity="{o}"/>' for x, y, r, c, o in [
         (28, 38, 1.4, "var(--star)", 0.55), (74, 20, 1.1, "var(--star)", 0.45), (118, 52, 1.2, "var(--ion)", 0.7),
-        (176, 30, 1.0, "var(--star)", 0.4), (292, 96, 1.3, "var(--star)", 0.5), (206, 72, 0.9, "var(--star)", 0.35),
-        (52, 96, 1.0, "var(--gold)", 0.6), (300, 40, 1.1, "var(--ion)", 0.55)])
-    return f'''<figure class="{cls}" aria-hidden="true"><svg viewBox="0 0 320 236" fill="none">
+        (176, 30, 1.0, "var(--star)", 0.4), (300, 104, 1.3, "var(--star)", 0.5), (212, 64, 0.9, "var(--star)", 0.35),
+        (52, 96, 1.0, "var(--gold)", 0.6), (262, 28, 1.1, "var(--ion)", 0.55), (326, 80, 0.9, "var(--star)", 0.4)])
+    return f'''<figure class="{cls}" aria-hidden="true"><svg viewBox="0 0 340 236" fill="none">
 {stars}{sky}
-<ellipse cx="166" cy="214" rx="96" ry="6" fill="#000" fill-opacity="0.35"/>
+<ellipse cx="176" cy="214" rx="104" ry="6" fill="#000" fill-opacity="0.35"/>
 <path d="M 92 212 L 92 158 Q 92 122 126 122 Q 160 122 160 158 L 160 212 Z" fill="var(--field-2)" stroke="var(--star)" stroke-width="5" stroke-linejoin="round"/>
 <circle cx="126" cy="96" r="25" fill="var(--field-2)" stroke="var(--star)" stroke-width="5"/>
-<path d="M 206 138 L 190 212 M 206 138 L 236 212" stroke="var(--mark-gold, var(--gold))" stroke-width="6" stroke-linecap="round"/>
-<path d="M 166 162 L 248 78" stroke="var(--mark-gold, var(--gold))" stroke-width="9" stroke-linecap="round"/>
+<path d="M 231 118 L 214 212 M 231 118 L 258 212" stroke="var(--mark-gold, var(--gold))" stroke-width="6" stroke-linecap="round"/>
+<path d="M 190 160 L 272 77" stroke="var(--mark-gold, var(--gold))" stroke-width="9" stroke-linecap="round"/>
 </svg></figure>'''
 
 def horizon():
@@ -61,7 +64,7 @@ def horizon():
 def profile_figure():
     """An illustrative profile: five coordinates, three tier rings, an uncertainty band. No real taker's data."""
     import math
-    cx, cy = 360, 222
+    cx, cy = 360, 236
     R = 150
     axes = [("Gf", "Fluid reasoning", -90), ("Gc", "Crystallized density", -18), ("Gq", "Quantitative reasoning", 54),
             ("Gi", "Integrative, exploratory", 126), ("Gv", "Visuospatial reasoning", 198)]
@@ -71,10 +74,12 @@ def profile_figure():
         t = math.radians(a)
         return (cx + R * r * math.cos(t), cy + R * r * math.sin(t))
     out = []
-    for r, name in [(0.33, "The Gate"), (0.66, "The Bridge"), (1.0, "The Zenith")]:
+    for i, (r, name) in enumerate([(0.33, "The Gate"), (0.66, "The Bridge"), (1.0, "The Zenith")]):
         out.append(f'<circle class="ring" cx="{cx}" cy="{cy}" r="{R*r:.1f}"/>')
-        x, y = pt(90, r)
-        out.append(f'<text class="tier" x="{x:.1f}" y="{y-5:.1f}" text-anchor="middle">{name}</text>')
+        # The name follows the lower arc of its ring, left to right, sitting just inside the line.
+        (ax, ay), (bx, by) = pt(160, r), pt(20, r)   # a long arc so the name never runs off its path
+        out.append(f'<path id="tier-{i}" d="M {ax:.1f} {ay:.1f} A {R*r:.1f} {R*r:.1f} 0 0 0 {bx:.1f} {by:.1f}" fill="none"/>')
+        out.append(f'<text class="tier" dy="-4"><textPath href="#tier-{i}" startOffset="50%" text-anchor="middle">{name}</textPath></text>')
     for (code, name, a), v in zip(axes, vals):
         x, y = pt(a, 1.0)
         cls = "axis axis-x" if code == "Gi" else "axis"
@@ -89,12 +94,18 @@ def profile_figure():
         out.append(f'<circle class="{"pt-x" if code == "Gi" else "pt"}" cx="{x:.1f}" cy="{y:.1f}" r="4.2"/>')
     for code, name, a in axes:
         x, y = pt(a, 1.0)
-        anchor = "middle" if abs(math.cos(math.radians(a))) < 0.3 else ("start" if math.cos(math.radians(a)) > 0 else "end")
-        dx = 0 if anchor == "middle" else (12 if anchor == "start" else -12)
-        dy = -14 if math.sin(math.radians(a)) < -0.3 else (26 if math.sin(math.radians(a)) > 0.3 else 5)
-        out.append(f'<text class="code" x="{x+dx:.1f}" y="{y+dy:.1f}" text-anchor="{anchor}">{code}</text>')
-        out.append(f'<text x="{x+dx:.1f}" y="{y+dy+17:.1f}" text-anchor="{anchor}">{name}</text>')
-    svg = f'<svg viewBox="0 0 720 420" role="img" aria-label="An illustrative profile: five coordinates plotted against the three tiers, with an uncertainty band around the line.">' + "".join(out) + "</svg>"
+        cos_a, sin_a = math.cos(math.radians(a)), math.sin(math.radians(a))
+        anchor = "middle" if abs(cos_a) < 0.3 else ("start" if cos_a > 0 else "end")
+        dx = 0 if anchor == "middle" else (14 if anchor == "start" else -14)
+        if sin_a < -0.3:      # above the point: both lines sit clear of the ring
+            dy_code, dy_name = -32, -14
+        elif sin_a > 0.3:     # below the point
+            dy_code, dy_name = 24, 42
+        else:                 # beside the point
+            dy_code, dy_name = -4, 14
+        out.append(f'<text class="code" x="{x+dx:.1f}" y="{y+dy_code:.1f}" text-anchor="{anchor}">{code}</text>')
+        out.append(f'<text x="{x+dx:.1f}" y="{y+dy_name:.1f}" text-anchor="{anchor}">{name}</text>')
+    svg = f'<svg viewBox="0 0 720 440" role="img" aria-label="An illustrative profile: five coordinates plotted against the three tiers, with an uncertainty band around the line.">' + "".join(out) + "</svg>"
     return f'''<figure class="profile">{svg}
 <figcaption>An illustrative profile, not a real taker's. Each axis is one coordinate, the rings are the three tiers, and the band around the line is the uncertainty the report carries with it. The dashed axis is the exploratory fifth coordinate.</figcaption></figure>'''
 
@@ -164,8 +175,9 @@ SCRIPT = r'''<script>
   // A few stars twinkle; the loop runs only while the hero is on screen and motion is allowed.
   var c = document.getElementById("field");
   if (c && c.getContext) {
-    var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [];
+    var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [], pivot = { x: 0, y: 0 };
     var motion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+    var OMEGA = 0.0064; // radians per second: one turn of the sky in about sixteen minutes
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
     function layout() {
       var r = c.getBoundingClientRect();
@@ -174,34 +186,43 @@ SCRIPT = r'''<script>
       W = r.width; H = r.height;
       c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var rnd = seeded(1618), n = Math.round(W * H / 7000);
+      // The sky turns around the mark, so the stars are laid out in a disc around it that covers the canvas at every angle.
+      var m = document.querySelector(".hero-mark .mark"), mr = m && m.getBoundingClientRect();
+      pivot = mr ? { x: mr.left + mr.width / 2 - r.left, y: mr.top + mr.height / 2 - r.top } : { x: W * 0.72, y: H * 0.5 };
+      var far = 0, cs = [[0, 0], [W, 0], [0, H], [W, H]];
+      for (var q = 0; q < 4; q++) far = Math.max(far, Math.hypot(cs[q][0] - pivot.x, cs[q][1] - pivot.y));
+      var rnd = seeded(1618), n = Math.round(Math.PI * far * far / 7000);
       stars = [];
       for (var i = 0; i < n; i++) {
-        var roll = rnd(), x = rnd() * W, y = rnd() * H, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
+        var roll = rnd(), rad = far * Math.sqrt(rnd()), th = rnd() * 6.283, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
         var col = roll > 0.95 ? "255,184,48" : roll > 0.85 ? "92,225,255" : "238,242,255";
-        if (roll > 0.85) a = 0.7;
-        stars.push({ x: x, y: y, s: s, c: col, a: a, tw: rnd() < 0.14, ph: rnd() * 6.283, rate: 0.6 + rnd() * 1.2 });
+        if (roll > 0.85) a = 0.75;
+        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.3, ph: rnd() * 6.283, rate: 0.7 + rnd() * 1.6 });
       }
-      pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
+      pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]].map(function (p) { return [p[0] * W - pivot.x, p[1] * H - pivot.y]; });
       return true;
     }
     function draw(t) {
       ctx.clearRect(0, 0, W, H);
+      ctx.save();
+      ctx.translate(pivot.x, pivot.y);
+      ctx.rotate(motion ? (t / 1000) * OMEGA : 0);
       for (var i = 0; i < stars.length; i++) {
-        var st = stars[i], a = st.a;
-        if (st.tw && t) a = st.a * (0.6 + 0.4 * Math.sin(t / 1000 * st.rate + st.ph));
-        ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, 6.283);
+        var st = stars[i], a = st.a, sz = st.s;
+        if (st.tw && t) { var w = Math.sin(t / 1000 * st.rate + st.ph); a = st.a * (0.5 + 0.5 * w); sz = st.s * (0.9 + 0.2 * w); }
+        ctx.beginPath(); ctx.arc(st.x, st.y, sz, 0, 6.283);
         ctx.fillStyle = "rgba(" + st.c + "," + a.toFixed(3) + ")"; ctx.fill();
       }
       ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
-      for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * W, py = pts[j][1] * H; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
+      for (var j = 0; j < pts.length; j++) { if (j === 0) ctx.moveTo(pts[j][0], pts[j][1]); else ctx.lineTo(pts[j][0], pts[j][1]); }
       ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * W, pts[k][1] * H, k === 2 ? 1.8 : 1.3, 0, 6.283); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0], pts[k][1], k === 2 ? 1.8 : 1.3, 0, 6.283); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      ctx.restore();
     }
     var visible = true, running = false, last = 0;
     function loop(t) {
       if (!running) return;
-      if (t - last > 40) { last = t; draw(t); }
+      if (t - last > 33) { last = t; draw(t); }
       requestAnimationFrame(loop);
     }
     function start() { if (motion && visible && !document.hidden && !running) { running = true; requestAnimationFrame(loop); } }
@@ -213,6 +234,14 @@ SCRIPT = r'''<script>
     document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
     start();
     var tm; window.addEventListener("resize", function () { clearTimeout(tm); tm = setTimeout(function () { if (layout()) draw(0); }, 150); });
+  }
+  // Sections rise into place as they enter the view.
+  var reveals = document.querySelectorAll(".section, .essay-head .wrap, .notfound .wrap");
+  if ("IntersectionObserver" in window && reveals.length) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    Array.prototype.forEach.call(reveals, function (el) { el.classList.add("reveal"); io.observe(el); });
   }
   // Reading progress on essay pages.
   var bar = document.querySelector(".progress span");
@@ -247,7 +276,7 @@ def page(title, body, current, prefix="", description="", path="index.html", ima
     desc = html.escape(description) if description else "Visionary Systems builds the Visionary Psychometric Scan and publishes The Visionary."
     url = f"{SITE}/{path}" if path != "index.html" else f"{SITE}/"
     theme = '<script>try{if(localStorage.getItem("vs-theme")==="paper")document.documentElement.setAttribute("data-theme","paper")}catch(e){}</script>\n' if themed else ""
-    head = theme + f'''<meta charset="utf-8">
+    head = '<script>document.documentElement.classList.add("js")</script>\n' + theme + f'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{desc}">
@@ -499,6 +528,7 @@ def visionary_page(prefix=""):
 <div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
 <p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
+<p>The name is the company's, not a title the founder claims. The visionary in it is whoever is at the eyepiece, which is to say the reader.</p>
 </div>''')}
 
 {section(rail("The Calibration Series", f"{len(ESSAYS)} of {SERIES_TOTAL} published"), essay_list(prefix))}
