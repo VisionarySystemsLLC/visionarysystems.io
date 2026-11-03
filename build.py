@@ -443,7 +443,7 @@ def index_page(prefix=""):
 
 <section class="band band-raised">
 {section(rail("The Visionary", "Launching March 2027"), f'''<div class="prose">
-<p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. It launches in March 2027. Until then, The Calibration Series runs here as its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here with its original date.</p>
+<p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. It launches in March 2027. Until then, The Calibration Series runs here as its precursor: a series of pieces about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here with their original dates.</p>
 </div>
 {essay_list(prefix)}
 <p><a href="{prefix}visionary.html">About the publication, The Scrolls, and how to subscribe.</a></p>''')}
@@ -524,7 +524,7 @@ def visionary_page(prefix=""):
 {page_head("The publication", "The Visionary", "A publication on psychometrics, written from inside an instrument's calibration.", observer("pub"))}
 {section('<p class="kicker">Launching March 2027</p>', '''<div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
-<p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
+<p>The Visionary launches in March 2027. The Calibration Series is its precursor: a series of pieces about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
 <p>Visionaries are those who care to look through the instrument, to see beyond.</p>
 </div>''')}
 
