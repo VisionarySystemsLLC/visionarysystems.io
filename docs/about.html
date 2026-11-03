@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>About Visionary Systems</title>
-<meta name="description" content="Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.">
+<meta name="description" content="Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.">
 <meta name="theme-color" content="#0A1628">
 <link rel="canonical" href="https://visionarysystems.io/about.html">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -14,14 +14,14 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Visionary Systems">
 <meta property="og:title" content="About Visionary Systems">
-<meta property="og:description" content="Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.">
+<meta property="og:description" content="Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.">
 <meta property="og:url" content="https://visionarysystems.io/about.html">
 <meta property="og:image" content="https://visionarysystems.io/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="About Visionary Systems">
-<meta name="twitter:description" content="Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.">
+<meta name="twitter:description" content="Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.">
 <meta name="twitter:image" content="https://visionarysystems.io/assets/og-image.png">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/spectral-latin-400-normal.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/spectral-latin-500-normal.woff2">
 <link rel="stylesheet" href="style.css">
@@ -46,7 +46,7 @@
 </div>
 <div class="wrap section">
 <div class="rail"><p class="kicker">Greenville, South Carolina</p></div>
-<div class="content"><p class="lede">Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.</p>
+<div class="content"><p class="lede">Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.</p>
 <div class="prose">
 <p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one periodical, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
 </div></div>
@@ -149,7 +149,7 @@
   if (c && c.getContext) {
     var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [], pivot = { x: 0, y: 0 };
     var motion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-    var OMEGA = 0.0064; // radians per second: one turn of the sky in about sixteen minutes
+    var OMEGA = 0.0092; // radians per second: one turn of the sky in about eleven minutes
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
     function layout() {
       var r = c.getBoundingClientRect();
@@ -169,7 +169,7 @@
         var roll = rnd(), rad = far * Math.sqrt(rnd()), th = rnd() * 6.283, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
         var col = roll > 0.95 ? "255,184,48" : roll > 0.85 ? "92,225,255" : "238,242,255";
         if (roll > 0.85) a = 0.75;
-        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.3, ph: rnd() * 6.283, rate: 0.7 + rnd() * 1.6 });
+        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.4, ph: rnd() * 6.283, rate: 0.8 + rnd() * 1.8 });
       }
       pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]].map(function (p) { return [p[0] * W - pivot.x, p[1] * H - pivot.y]; });
       return true;

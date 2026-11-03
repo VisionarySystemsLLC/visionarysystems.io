@@ -30,7 +30,7 @@ def mark(suffix, cls="mark", spark=False):
     # The spark rides the ring once every nine seconds and passes behind the lens where the ring does.
     orbit = "M 144 100 A 44 44 0 1 1 56 100 A 44 44 0 1 1 144 100"
     sp = (f'<g mask="url(#gm-{suffix})">'
-          + "".join(f'<circle class="spark" r="{r}" fill="var(--gold-hot)" fill-opacity="{o}"><animateMotion dur="9s" begin="{b}s" repeatCount="indefinite" path="{orbit}"/></circle>'
+          + "".join(f'<circle class="spark" r="{r}" fill="var(--gold-hot)" fill-opacity="{o}"><animateMotion dur="7.5s" begin="{b}s" repeatCount="indefinite" path="{orbit}"/></circle>'
                     for r, o, b in [(2.0, 0.25, -0.5), (2.8, 0.5, -0.25), (4.0, 1, 0)])
           + "</g>") if spark else ""
     return f'''<svg class="{cls}" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
@@ -73,17 +73,18 @@ def profile_figure():
     def pt(a, r):
         t = math.radians(a)
         return (cx + R * r * math.cos(t), cy + R * r * math.sin(t))
-    out = []
+    out, tiers = [], []
     for i, (r, name) in enumerate([(0.33, "The Gate"), (0.66, "The Bridge"), (1.0, "The Zenith")]):
         out.append(f'<circle class="ring" cx="{cx}" cy="{cy}" r="{R*r:.1f}"/>')
         # The name follows the lower arc of its ring, left to right, sitting just inside the line.
         (ax, ay), (bx, by) = pt(160, r), pt(20, r)   # a long arc so the name never runs off its path
         out.append(f'<path id="tier-{i}" d="M {ax:.1f} {ay:.1f} A {R*r:.1f} {R*r:.1f} 0 0 0 {bx:.1f} {by:.1f}" fill="none"/>')
-        out.append(f'<text class="tier" dy="-4"><textPath href="#tier-{i}" startOffset="50%" text-anchor="middle">{name}</textPath></text>')
+        tiers.append(f'<text class="tier" dy="-4"><textPath href="#tier-{i}" startOffset="50%" text-anchor="middle">{name}</textPath></text>')
     for (code, name, a), v in zip(axes, vals):
         x, y = pt(a, 1.0)
         cls = "axis axis-x" if code == "Gi" else "axis"
         out.append(f'<line class="{cls}" x1="{cx}" y1="{cy}" x2="{x:.1f}" y2="{y:.1f}"/>')
+    out.extend(tiers)   # after the axes, before the band, so the names sit over the lines and under nothing
     outer = [pt(a, min(1.0, v + e)) for (_, _, a), v, e in zip(axes, vals, err)]
     inner = [pt(a, max(0.05, v - e)) for (_, _, a), v, e in zip(axes, vals, err)]
     band = "M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in outer) + " Z M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in inner) + " Z"
@@ -177,7 +178,7 @@ SCRIPT = r'''<script>
   if (c && c.getContext) {
     var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [], pivot = { x: 0, y: 0 };
     var motion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-    var OMEGA = 0.0064; // radians per second: one turn of the sky in about sixteen minutes
+    var OMEGA = 0.0092; // radians per second: one turn of the sky in about eleven minutes
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
     function layout() {
       var r = c.getBoundingClientRect();
@@ -197,7 +198,7 @@ SCRIPT = r'''<script>
         var roll = rnd(), rad = far * Math.sqrt(rnd()), th = rnd() * 6.283, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
         var col = roll > 0.95 ? "255,184,48" : roll > 0.85 ? "92,225,255" : "238,242,255";
         if (roll > 0.85) a = 0.75;
-        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.3, ph: rnd() * 6.283, rate: 0.7 + rnd() * 1.6 });
+        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.4, ph: rnd() * 6.283, rate: 0.8 + rnd() * 1.8 });
       }
       pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]].map(function (p) { return [p[0] * W - pivot.x, p[1] * H - pivot.y]; });
       return true;
@@ -528,7 +529,7 @@ def visionary_page(prefix=""):
 <div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
 <p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
-<p>The name is the company's, not a title the founder claims. The visionary in it is whoever is at the eyepiece, which is to say the reader.</p>
+<p>Visionaries are those who care to look through the instrument, to see beyond.</p>
 </div>''')}
 
 {section(rail("The Calibration Series", f"{len(ESSAYS)} of {SERIES_TOTAL} published"), essay_list(prefix))}
@@ -545,7 +546,7 @@ def visionary_page(prefix=""):
 def about_page(prefix=""):
     body = f'''<section class="band band-page">
 {page_head("The company", "About")}
-{section('<p class="kicker">Greenville, South Carolina</p>', '''<p class="lede">Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.</p>
+{section('<p class="kicker">Greenville, South Carolina</p>', '''<p class="lede">Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.</p>
 <div class="prose">
 <p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one periodical, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
 </div>''')}
@@ -565,7 +566,7 @@ def about_page(prefix=""):
 </div>''')}
 </section>'''
     return page("About Visionary Systems", body, "about", prefix,
-                "Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.", "about.html")
+                "Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.", "about.html")
 
 def notfound_page():
     # Served by GitHub Pages for any missing path, at any depth, so every link is absolute.

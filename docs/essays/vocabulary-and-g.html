@@ -132,7 +132,7 @@
   if (c && c.getContext) {
     var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [], pivot = { x: 0, y: 0 };
     var motion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-    var OMEGA = 0.0064; // radians per second: one turn of the sky in about sixteen minutes
+    var OMEGA = 0.0092; // radians per second: one turn of the sky in about eleven minutes
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
     function layout() {
       var r = c.getBoundingClientRect();
@@ -152,7 +152,7 @@
         var roll = rnd(), rad = far * Math.sqrt(rnd()), th = rnd() * 6.283, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
         var col = roll > 0.95 ? "255,184,48" : roll > 0.85 ? "92,225,255" : "238,242,255";
         if (roll > 0.85) a = 0.75;
-        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.3, ph: rnd() * 6.283, rate: 0.7 + rnd() * 1.6 });
+        stars.push({ x: rad * Math.cos(th), y: rad * Math.sin(th), s: s, c: col, a: a, tw: rnd() < 0.4, ph: rnd() * 6.283, rate: 0.8 + rnd() * 1.8 });
       }
       pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]].map(function (p) { return [p[0] * W - pivot.x, p[1] * H - pivot.y]; });
       return true;
