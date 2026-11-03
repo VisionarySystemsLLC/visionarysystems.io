@@ -112,8 +112,9 @@ body {{ width: 1200px; height: 630px; }}
 </div></div></body></html>"""
 
 
-def reddit_banner():
-    w, h = 1920, 384
+def reddit_banner(w=1600, h=480, mark=124, text=58):
+    """Profile banner. 1600x480 (10:3) is what the new profile page shows whole; the lockup sits in the
+    middle band so a wider surface that crops top and bottom (5:1) still keeps it."""
     left = constellation(w, h, [(0.05, 0.18), (0.11, 0.36), (0.16, 0.30), (0.20, 0.52), (0.17, 0.74)])
     right = constellation(w, h, [(0.95, 0.20), (0.90, 0.34), (0.85, 0.30), (0.80, 0.54), (0.84, 0.76)])
     return f"""<!doctype html><html><head><meta charset="utf-8"><base href="http://127.0.0.1:{PORT}/"><style>{CSS}
@@ -124,8 +125,8 @@ body {{ width: {w}px; height: {h}px; background: {NAVY}; }}
 </style></head><body>
 <div class="aurora"></div>{stars_svg(w, h, 2718, density=8000, ion=0.09, gold=0.05)}
 <svg class="sky" width="{w}" height="{h}" viewBox="0 0 {w} {h}">{left}{right}</svg>
-{horizon(64)}
-<div class="frame">{lockup(118, 58, "rb")}</div>
+{horizon(round(h / 6))}
+<div class="frame">{lockup(mark, text, "rb")}</div>
 </body></html>"""
 
 
@@ -179,7 +180,8 @@ async def main():
             for i, e in enumerate(build.ESSAYS, start=1):
                 await render(page, essay_card(e, i), 1200, 630, os.path.join(OG_DIR, f"{e['slug']}.png"))
             await render(page, site_card(), 1200, 630, os.path.join(ROOT, "src", "assets", "og-image.png"))
-            await render(page, reddit_banner(), 1920, 384, os.path.join(BRAND_DIR, "reddit-banner-1920x384.png"))
+            await render(page, reddit_banner(), 1600, 480, os.path.join(BRAND_DIR, "reddit-banner-1600x480.png"))
+            await render(page, reddit_banner(1920, 384, 118, 58), 1920, 384, os.path.join(BRAND_DIR, "reddit-banner-1920x384.png"))
             await render(page, reddit_avatar(), 512, 512, os.path.join(BRAND_DIR, "reddit-avatar-512.png"))
             await b.close()
     finally:
