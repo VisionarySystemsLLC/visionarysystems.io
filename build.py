@@ -61,14 +61,14 @@ def horizon():
 <path d="M0 58 Q 500 -34 1000 58" fill="none" stroke="#5CE1FF" stroke-opacity="0.38" stroke-width="1" vector-effect="non-scaling-stroke"/>
 </svg>'''
 
-def profile_figure():
+def profile_figure(short=False):
     """An illustrative profile: five coordinates, three tier rings, an uncertainty band. No real taker's data."""
     import math
     cx, cy = 360, 236
     R = 150
     axes = [("Gf", "Fluid reasoning", -90), ("Gc", "Crystallized density", -18), ("Gq", "Quantitative reasoning", 54),
             ("Gi", "Integrative, exploratory", 126), ("Gv", "Visuospatial reasoning", 198)]
-    vals = [0.86, 0.62, 0.52, 0.66, 0.76]
+    vals = [0.86, 0.62, 0.50, 0.60, 0.76]
     err  = [0.07, 0.10, 0.10, 0.15, 0.08]
     def pt(a, r):
         t = math.radians(a)
@@ -77,7 +77,7 @@ def profile_figure():
     for i, (r, name) in enumerate([(0.33, "The Gate"), (0.66, "The Bridge"), (1.0, "The Zenith")]):
         out.append(f'<circle class="ring" cx="{cx}" cy="{cy}" r="{R*r:.1f}"/>')
         # The name follows the lower arc of its ring, left to right, sitting just inside the line.
-        (ax, ay), (bx, by) = pt(160, r), pt(20, r)   # a long arc so the name never runs off its path
+        (ax, ay), (bx, by) = pt(118, r), pt(26, r)   # centered on the lower right, where the profile sits lowest
         out.append(f'<path id="tier-{i}" d="M {ax:.1f} {ay:.1f} A {R*r:.1f} {R*r:.1f} 0 0 0 {bx:.1f} {by:.1f}" fill="none"/>')
         tiers.append(f'<text class="tier" dy="-4"><textPath href="#tier-{i}" startOffset="50%" text-anchor="middle">{name}</textPath></text>')
     for (code, name, a), v in zip(axes, vals):
@@ -107,8 +107,11 @@ def profile_figure():
         out.append(f'<text class="code" x="{x+dx:.1f}" y="{y+dy_code:.1f}" text-anchor="{anchor}">{code}</text>')
         out.append(f'<text x="{x+dx:.1f}" y="{y+dy_name:.1f}" text-anchor="{anchor}">{name}</text>')
     svg = f'<svg viewBox="0 0 720 440" role="img" aria-label="An illustrative profile: five coordinates plotted against the three tiers, with an uncertainty band around the line.">' + "".join(out) + "</svg>"
+    cap = ("An illustrative profile, not a real taker's: one axis per coordinate, the three tiers as rings, and the uncertainty drawn in as a band."
+           if short else
+           "An illustrative profile, not a real taker's. Each axis is one coordinate, the rings are the three tiers, and the band around the line is the uncertainty the report carries with it. The dashed axis is the exploratory fifth coordinate.")
     return f'''<figure class="profile">{svg}
-<figcaption>An illustrative profile, not a real taker's. Each axis is one coordinate, the rings are the three tiers, and the band around the line is the uncertainty the report carries with it. The dashed axis is the exploratory fifth coordinate.</figcaption></figure>'''
+<figcaption>{cap}</figcaption></figure>'''
 
 
 def header(current, prefix):
@@ -123,7 +126,7 @@ def header(current, prefix):
 </div></header>'''
 
 def footer(prefix):
-    return f'''<footer class="site-footer"><div class="wrap">
+    return f'''<footer class="site-footer">{horizon()}<div class="wrap">
 <div>
 <a class="lockup" href="{prefix}index.html" aria-label="Visionary Systems home">{mark("f")}<span class="wordmark">Visionary <span>Systems</span></span></a>
 <div class="colophon">
@@ -214,7 +217,7 @@ SCRIPT = r'''<script>
         ctx.beginPath(); ctx.arc(st.x, st.y, sz, 0, 6.283);
         ctx.fillStyle = "rgba(" + st.c + "," + a.toFixed(3) + ")"; ctx.fill();
       }
-      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
+      ctx.strokeStyle = "rgba(92,225,255,0.26)"; ctx.lineWidth = 0.7; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { if (j === 0) ctx.moveTo(pts[j][0], pts[j][1]); else ctx.lineTo(pts[j][0], pts[j][1]); }
       ctx.stroke();
       for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0], pts[k][1], k === 2 ? 1.8 : 1.3, 0, 6.283); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
@@ -326,8 +329,9 @@ def rail(h2, kicker=None):
     k = f'\n<p class="kicker">{kicker}</p>' if kicker else ""
     return f'<h2>{h2}</h2>{k}'
 
-def page_head(eyebrow, h1):
-    return f'<div class="wrap page-head">\n<p class="eyebrow">{eyebrow}</p>\n<h1>{h1}</h1>\n</div>'
+def page_head(eyebrow, h1, lede="", aside=""):
+    l = f'\n<p class="lede">{lede}</p>' if lede else ""
+    return f'<div class="wrap page-head">\n<div><p class="eyebrow">{eyebrow}</p>\n<h1>{h1}</h1>{l}</div>\n{aside}\n</div>'
 
 def subscribe_block():
     return f'''<div class="subscribe">
@@ -461,9 +465,8 @@ def index_page(prefix=""):
 
 def scan_page(prefix=""):
     body = f'''<section class="band band-page">
-{page_head("The instrument", "The Visionary Psychometric Scan")}
-{section('<p class="kicker">Beta 2.0, in calibration since July 2026</p>', f'''<p class="lede">An untimed, adaptive reasoning battery built for the high range, in beta calibration since July 2026.</p>
-<div class="prose">
+{page_head("The instrument", "The Visionary Psychometric Scan", "An untimed, adaptive reasoning battery built for the high range, in beta calibration since July 2026.", profile_figure(short=True))}
+{section('<p class="kicker">Beta 2.0, in calibration since July 2026</p>', f'''<div class="prose">
 <p>The Scan is 36 items long, with eight options per item. It is administered online, on a computer, with paper and pencil allowed and no clock of any kind. It adapts after the first tier, so most takers see fewer than 36 items. It asks for no outside knowledge, and its report describes the shape of a person's reasoning rather than producing one number to rank them by.</p>
 </div>''')}
 
@@ -488,8 +491,6 @@ def scan_page(prefix=""):
 <div><h3>A fifth coordinate</h3>
 <p>Integrative intelligence, meaning reasoning across domains, is included as a coordinate because the ability seems real and underexamined. It ships labeled exploratory, and it stays labeled that way until the data says otherwise.</p></div>
 </div>''')}
-
-{section(rail("The report", "Illustrative"), profile_figure())}
 
 {section(rail("Taking the Beta", "Open through the winter"), f'''<div class="prose">
 <p>The Beta is open through the winter. It is hard from the first items, most people will not clear The Gate, and it takes 45 to 90 minutes on a computer. A quiet hour, a sheet of paper, and a willingness to be stumped are the whole kit.</p>
@@ -520,13 +521,8 @@ def scan_page(prefix=""):
 
 def visionary_page(prefix=""):
     body = f'''<section class="band band-page">
-<div class="wrap page-head with-figure">
-<div><p class="eyebrow">The publication</p>
-<h1>The Visionary</h1></div>
-{observer("pub")}
-</div>
-{section('<p class="kicker">Launching March 2027</p>', '''<p class="lede">A publication on psychometrics, written from inside an instrument's calibration.</p>
-<div class="prose">
+{page_head("The publication", "The Visionary", "A publication on psychometrics, written from inside an instrument's calibration.", observer("pub"))}
+{section('<p class="kicker">Launching March 2027</p>', '''<div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
 <p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
 <p>Visionaries are those who care to look through the instrument, to see beyond.</p>
@@ -545,9 +541,13 @@ def visionary_page(prefix=""):
 
 def about_page(prefix=""):
     body = f'''<section class="band band-page">
-{page_head("The company", "About")}
-{section('<p class="kicker">Greenville, South Carolina</p>', '''<p class="lede">Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.</p>
-<div class="prose">
+{page_head("The company", "About", "Visionary Systems is a one-person psychometrics observatory in Greenville, South Carolina, founded in 2026.", '''<div class="facts">
+<div class="fact"><div class="value">2026</div><div class="label">founded</div></div>
+<div class="fact"><div class="value">Greenville</div><div class="label">South Carolina</div></div>
+<div class="fact"><div class="value">One instrument</div><div class="label">the Visionary Psychometric Scan</div></div>
+<div class="fact"><div class="value">One periodical</div><div class="label">The Visionary</div></div>
+</div>''')}
+{section('<p class="kicker">One conviction</p>', '''<div class="prose">
 <p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one periodical, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
 </div>''')}
 

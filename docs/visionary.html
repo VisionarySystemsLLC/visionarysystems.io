@@ -40,9 +40,10 @@
 </div></header>
 <main>
 <section class="band band-page">
-<div class="wrap page-head with-figure">
+<div class="wrap page-head">
 <div><p class="eyebrow">The publication</p>
-<h1>The Visionary</h1></div>
+<h1>The Visionary</h1>
+<p class="lede">A publication on psychometrics, written from inside an instrument's calibration.</p></div>
 <figure class="observer" aria-hidden="true"><svg viewBox="0 0 340 236" fill="none">
 <circle cx="28" cy="38" r="1.4" fill="var(--star)" fill-opacity="0.55"/><circle cx="74" cy="20" r="1.1" fill="var(--star)" fill-opacity="0.45"/><circle cx="118" cy="52" r="1.2" fill="var(--ion)" fill-opacity="0.7"/><circle cx="176" cy="30" r="1.0" fill="var(--star)" fill-opacity="0.4"/><circle cx="300" cy="104" r="1.3" fill="var(--star)" fill-opacity="0.5"/><circle cx="212" cy="64" r="0.9" fill="var(--star)" fill-opacity="0.35"/><circle cx="52" cy="96" r="1.0" fill="var(--gold)" fill-opacity="0.6"/><circle cx="262" cy="28" r="1.1" fill="var(--ion)" fill-opacity="0.55"/><circle cx="326" cy="80" r="0.9" fill="var(--star)" fill-opacity="0.4"/><g class="obs-sky" transform="translate(293 17) scale(0.19)"><defs>
 <mask id="rm-obpub"><rect width="200" height="200" fill="#fff"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#000" stroke-width="15" fill="none"/></mask>
@@ -59,8 +60,7 @@
 </div>
 <div class="wrap section">
 <div class="rail"><p class="kicker">Launching March 2027</p></div>
-<div class="content"><p class="lede">A publication on psychometrics, written from inside an instrument's calibration.</p>
-<div class="prose">
+<div class="content"><div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
 <p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
 <p>Visionaries are those who care to look through the instrument, to see beyond.</p>
@@ -104,7 +104,11 @@
 </div>
 </section>
 </main>
-<footer class="site-footer"><div class="wrap">
+<footer class="site-footer"><svg class="horizon" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+<defs><linearGradient id="hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5CE1FF" stop-opacity="0.11"/><stop offset="1" stop-color="#5CE1FF" stop-opacity="0"/></linearGradient></defs>
+<path d="M0 80 L0 58 Q 500 -34 1000 58 L1000 80 Z" fill="url(#hz)"/>
+<path d="M0 58 Q 500 -34 1000 58" fill="none" stroke="#5CE1FF" stroke-opacity="0.38" stroke-width="1" vector-effect="non-scaling-stroke"/>
+</svg><div class="wrap">
 <div>
 <a class="lockup" href="index.html" aria-label="Visionary Systems home"><svg class="mark" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
 <defs>
@@ -201,7 +205,7 @@
         ctx.beginPath(); ctx.arc(st.x, st.y, sz, 0, 6.283);
         ctx.fillStyle = "rgba(" + st.c + "," + a.toFixed(3) + ")"; ctx.fill();
       }
-      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
+      ctx.strokeStyle = "rgba(92,225,255,0.26)"; ctx.lineWidth = 0.7; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { if (j === 0) ctx.moveTo(pts[j][0], pts[j][1]); else ctx.lineTo(pts[j][0], pts[j][1]); }
       ctx.stroke();
       for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0], pts[k][1], k === 2 ? 1.8 : 1.3, 0, 6.283); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
