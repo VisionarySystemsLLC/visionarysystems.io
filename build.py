@@ -7,22 +7,97 @@ SRC = os.path.join(ROOT, "src")
 DIST = os.path.join(ROOT, "docs")
 ART = os.path.join(ROOT, "artifact")
 
-FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">'
+def fonts(prefix):
+    return (f'<link rel="preload" as="font" type="font/woff2" crossorigin href="{prefix}assets/fonts/spectral-latin-400-normal.woff2">'
+            f'<link rel="preload" as="font" type="font/woff2" crossorigin href="{prefix}assets/fonts/spectral-latin-500-normal.woff2">')
+FONTS = fonts("")
 
 BETA_URL = "https://research.sc/participant/login/dynamic/3AC727A6-CAA0-4049-9772-535E51EFFEBC"
 REDDIT_PROFILE = "https://www.reddit.com/user/VisionarySystems/"
 EMAIL = "morgan@visionarysystems.io"
 SERIES_TOTAL = 8   # planned length of The Calibration Series; the published count comes from content/essays/
 
-def mark(suffix, cls="mark"):
-    return f'''<svg class="{cls}" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
-<defs>
+def mark_body(suffix):
+    """The mark's masks and strokes, for use inside any SVG (the weave is identical to the kit's mark)."""
+    return f'''<defs>
 <mask id="rm-{suffix}"><rect width="200" height="200" fill="#fff"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#000" stroke-width="15" fill="none"/></mask>
 <mask id="gm-{suffix}"><rect width="200" height="200" fill="#fff"/><ellipse cx="100" cy="100" rx="19" ry="79" stroke="#000" stroke-width="14" fill="none"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#fff" stroke-width="15" fill="none"/></mask>
 </defs>
 <ellipse cx="100" cy="100" rx="19" ry="79" stroke="var(--star)" stroke-width="6.5" fill="none" mask="url(#rm-{suffix})"/>
-<circle cx="100" cy="100" r="44" stroke="var(--gold)" stroke-width="10" fill="none" mask="url(#gm-{suffix})"/>
+<circle cx="100" cy="100" r="44" stroke="var(--mark-gold, var(--gold))" stroke-width="10" fill="none" mask="url(#gm-{suffix})"/>'''
+
+def mark(suffix, cls="mark", spark=False):
+    # The spark rides the ring once every nine seconds and passes behind the lens where the ring does.
+    sp = (f'<g mask="url(#gm-{suffix})"><circle class="spark" r="3.4" fill="var(--gold-hot)">'
+          f'<animateMotion dur="9s" repeatCount="indefinite" path="M 144 100 A 44 44 0 1 1 56 100 A 44 44 0 1 1 144 100"/></circle></g>') if spark else ""
+    return f'''<svg class="{cls}" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
+{mark_body(suffix)}{sp}
 </svg>'''
+
+def observer(suffix, with_mark=True, cls="observer"):
+    """The figure at the eyepiece from the brand kit, as inline SVG so it takes the page's colors."""
+    sky = (f'<g class="obs-sky" transform="translate(236 16) scale(0.19)">{mark_body("ob" + suffix)}</g>') if with_mark else ""
+    stars = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{c}" fill-opacity="{o}"/>' for x, y, r, c, o in [
+        (28, 38, 1.4, "var(--star)", 0.55), (74, 20, 1.1, "var(--star)", 0.45), (118, 52, 1.2, "var(--ion)", 0.7),
+        (176, 30, 1.0, "var(--star)", 0.4), (292, 96, 1.3, "var(--star)", 0.5), (206, 72, 0.9, "var(--star)", 0.35),
+        (52, 96, 1.0, "var(--gold)", 0.6), (300, 40, 1.1, "var(--ion)", 0.55)])
+    return f'''<figure class="{cls}" aria-hidden="true"><svg viewBox="0 0 320 236" fill="none">
+{stars}{sky}
+<ellipse cx="166" cy="214" rx="96" ry="6" fill="#000" fill-opacity="0.35"/>
+<path d="M 92 212 L 92 158 Q 92 122 126 122 Q 160 122 160 158 L 160 212 Z" fill="var(--field-2)" stroke="var(--star)" stroke-width="5" stroke-linejoin="round"/>
+<circle cx="126" cy="96" r="25" fill="var(--field-2)" stroke="var(--star)" stroke-width="5"/>
+<path d="M 206 138 L 190 212 M 206 138 L 236 212" stroke="var(--mark-gold, var(--gold))" stroke-width="6" stroke-linecap="round"/>
+<path d="M 166 162 L 248 78" stroke="var(--mark-gold, var(--gold))" stroke-width="9" stroke-linecap="round"/>
+</svg></figure>'''
+
+def horizon():
+    """The planetary curve from the banner, drawn under the hero."""
+    return '''<svg class="horizon" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+<defs><linearGradient id="hz" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5CE1FF" stop-opacity="0.11"/><stop offset="1" stop-color="#5CE1FF" stop-opacity="0"/></linearGradient></defs>
+<path d="M0 80 L0 58 Q 500 -34 1000 58 L1000 80 Z" fill="url(#hz)"/>
+<path d="M0 58 Q 500 -34 1000 58" fill="none" stroke="#5CE1FF" stroke-opacity="0.38" stroke-width="1" vector-effect="non-scaling-stroke"/>
+</svg>'''
+
+def profile_figure():
+    """An illustrative profile: five coordinates, three tier rings, an uncertainty band. No real taker's data."""
+    import math
+    cx, cy = 360, 222
+    R = 150
+    axes = [("Gf", "Fluid reasoning", -90), ("Gc", "Crystallized density", -18), ("Gq", "Quantitative reasoning", 54),
+            ("Gi", "Integrative, exploratory", 126), ("Gv", "Visuospatial reasoning", 198)]
+    vals = [0.86, 0.62, 0.52, 0.66, 0.76]
+    err  = [0.07, 0.10, 0.10, 0.15, 0.08]
+    def pt(a, r):
+        t = math.radians(a)
+        return (cx + R * r * math.cos(t), cy + R * r * math.sin(t))
+    out = []
+    for r, name in [(0.33, "The Gate"), (0.66, "The Bridge"), (1.0, "The Zenith")]:
+        out.append(f'<circle class="ring" cx="{cx}" cy="{cy}" r="{R*r:.1f}"/>')
+        x, y = pt(90, r)
+        out.append(f'<text class="tier" x="{x:.1f}" y="{y-5:.1f}" text-anchor="middle">{name}</text>')
+    for (code, name, a), v in zip(axes, vals):
+        x, y = pt(a, 1.0)
+        cls = "axis axis-x" if code == "Gi" else "axis"
+        out.append(f'<line class="{cls}" x1="{cx}" y1="{cy}" x2="{x:.1f}" y2="{y:.1f}"/>')
+    outer = [pt(a, min(1.0, v + e)) for (_, _, a), v, e in zip(axes, vals, err)]
+    inner = [pt(a, max(0.05, v - e)) for (_, _, a), v, e in zip(axes, vals, err)]
+    band = "M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in outer) + " Z M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in inner) + " Z"
+    out.append(f'<path class="band" d="{band}" fill-rule="evenodd"/>')
+    shape = [pt(a, v) for (_, _, a), v in zip(axes, vals)]
+    out.append('<path class="shape" d="M ' + " L ".join(f"{x:.1f} {y:.1f}" for x, y in shape) + ' Z"/>')
+    for (code, name, a), (x, y) in zip(axes, shape):
+        out.append(f'<circle class="{"pt-x" if code == "Gi" else "pt"}" cx="{x:.1f}" cy="{y:.1f}" r="4.2"/>')
+    for code, name, a in axes:
+        x, y = pt(a, 1.0)
+        anchor = "middle" if abs(math.cos(math.radians(a))) < 0.3 else ("start" if math.cos(math.radians(a)) > 0 else "end")
+        dx = 0 if anchor == "middle" else (12 if anchor == "start" else -12)
+        dy = -14 if math.sin(math.radians(a)) < -0.3 else (26 if math.sin(math.radians(a)) > 0.3 else 5)
+        out.append(f'<text class="code" x="{x+dx:.1f}" y="{y+dy:.1f}" text-anchor="{anchor}">{code}</text>')
+        out.append(f'<text x="{x+dx:.1f}" y="{y+dy+17:.1f}" text-anchor="{anchor}">{name}</text>')
+    svg = f'<svg viewBox="0 0 720 420" role="img" aria-label="An illustrative profile: five coordinates plotted against the three tiers, with an uncertainty band around the line.">' + "".join(out) + "</svg>"
+    return f'''<figure class="profile">{svg}
+<figcaption>An illustrative profile, not a real taker's. Each axis is one coordinate, the rings are the three tiers, and the band around the line is the uncertainty the report carries with it. The dashed axis is the exploratory fifth coordinate.</figcaption></figure>'''
+
 
 def header(current, prefix):
     links = [("scan", "The Scan", "scan.html"), ("visionary", "The Visionary", "visionary.html"), ("about", "About", "about.html")]
@@ -85,44 +160,94 @@ SCRIPT = r'''<script>
       } else { fallback(); }
     });
   });
-  // Deep field behind the hero, drawn once from a fixed seed so it is the same sky every visit.
+  // Deep field behind the hero, laid out from a fixed seed so it is the same sky every visit.
+  // A few stars twinkle; the loop runs only while the hero is on screen and motion is allowed.
   var c = document.getElementById("field");
   if (c && c.getContext) {
-    var ctx = c.getContext("2d");
+    var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [];
+    var motion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
-    function draw() {
+    function layout() {
       var r = c.getBoundingClientRect();
-      if (!r.width || !r.height) return;
+      if (!r.width || !r.height) return false;
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      c.width = Math.floor(r.width * dpr); c.height = Math.floor(r.height * dpr);
+      W = r.width; H = r.height;
+      c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, r.width, r.height);
-      var rnd = seeded(1618);
-      var n = Math.round(r.width * r.height / 7000);
+      var rnd = seeded(1618), n = Math.round(W * H / 7000);
+      stars = [];
       for (var i = 0; i < n; i++) {
-        var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
-        ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
-        ctx.fill();
+        var roll = rnd(), x = rnd() * W, y = rnd() * H, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
+        var col = roll > 0.95 ? "255,184,48" : roll > 0.85 ? "92,225,255" : "238,242,255";
+        if (roll > 0.85) a = 0.7;
+        stars.push({ x: x, y: y, s: s, c: col, a: a, tw: rnd() < 0.14, ph: rnd() * 6.283, rate: 0.6 + rnd() * 1.2 });
       }
-      var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
-      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
-      for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
-      ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
+      return true;
     }
-    draw();
-    var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });
+    function draw(t) {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < stars.length; i++) {
+        var st = stars[i], a = st.a;
+        if (st.tw && t) a = st.a * (0.6 + 0.4 * Math.sin(t / 1000 * st.rate + st.ph));
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, 6.283);
+        ctx.fillStyle = "rgba(" + st.c + "," + a.toFixed(3) + ")"; ctx.fill();
+      }
+      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
+      for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * W, py = pts[j][1] * H; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
+      ctx.stroke();
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * W, pts[k][1] * H, k === 2 ? 1.8 : 1.3, 0, 6.283); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+    }
+    var visible = true, running = false, last = 0;
+    function loop(t) {
+      if (!running) return;
+      if (t - last > 40) { last = t; draw(t); }
+      requestAnimationFrame(loop);
+    }
+    function start() { if (motion && visible && !document.hidden && !running) { running = true; requestAnimationFrame(loop); } }
+    function stop() { running = false; }
+    if (layout()) draw(0);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(c);
+    }
+    document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+    start();
+    var tm; window.addEventListener("resize", function () { clearTimeout(tm); tm = setTimeout(function () { if (layout()) draw(0); }, 150); });
   }
+  // Reading progress on essay pages.
+  var bar = document.querySelector(".progress span");
+  if (bar) {
+    var ticking = false;
+    function measure() {
+      var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, d.scrollTop / max) : 0).toFixed(4) + ")";
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(measure); } }, { passive: true });
+    measure();
+  }
+  // Paper or navy on essay pages, remembered in this browser only.
+  var toggles = document.querySelectorAll("[data-theme-toggle]");
+  function label(b) { b.textContent = document.documentElement.getAttribute("data-theme") === "paper" ? "Read on navy" : "Read on paper"; }
+  Array.prototype.forEach.call(toggles, function (b) {
+    label(b);
+    b.addEventListener("click", function () {
+      var paper = document.documentElement.getAttribute("data-theme") === "paper";
+      if (paper) document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", "paper");
+      try { localStorage.setItem("vs-theme", paper ? "navy" : "paper"); } catch (e) {}
+      Array.prototype.forEach.call(toggles, label);
+    });
+  });
 })();
 </script>'''
 
 SITE = "https://visionarysystems.io"
 
-def page(title, body, current, prefix="", description="", path="index.html"):
+def page(title, body, current, prefix="", description="", path="index.html", image="assets/og-image.png", themed=False):
     desc = html.escape(description) if description else "Visionary Systems builds the Visionary Psychometric Scan and publishes The Visionary."
     url = f"{SITE}/{path}" if path != "index.html" else f"{SITE}/"
-    head = f'''<meta charset="utf-8">
+    theme = '<script>try{if(localStorage.getItem("vs-theme")==="paper")document.documentElement.setAttribute("data-theme","paper")}catch(e){}</script>\n' if themed else ""
+    head = theme + f'''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{desc}">
@@ -136,14 +261,14 @@ def page(title, body, current, prefix="", description="", path="index.html"):
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}/assets/og-image.png">
+<meta property="og:image" content="{SITE}/{image}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{html.escape(title)}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="{SITE}/assets/og-image.png">
-{FONTS}
+<meta name="twitter:image" content="{SITE}/{image}">
+{fonts(prefix)}
 <link rel="stylesheet" href="{prefix}style.css">'''
     return f'''<!doctype html>
 <html lang="en">
@@ -256,6 +381,7 @@ def tiermap():
 def index_page(prefix=""):
     body = f'''<section class="hero">
 <canvas id="field" aria-hidden="true"></canvas>
+{horizon()}
 <div class="wrap">
 <div class="hero-text">
 <h1>What tests can and can't tell you.</h1>
@@ -265,7 +391,7 @@ def index_page(prefix=""):
 <a class="button button-ghost" href="{prefix}visionary.html#subscribe">Get the first issue</a>
 </div>
 </div>
-<div class="hero-mark">{mark("hero")}</div>
+<div class="hero-mark">{mark("hero", spark=True)}</div>
 </div>
 </section>
 
@@ -333,6 +459,8 @@ def scan_page(prefix=""):
 <p>Integrative intelligence, meaning reasoning across domains, is included as a coordinate because the ability seems real and underexamined. It ships labeled exploratory, and it stays labeled that way until the data says otherwise.</p></div>
 </div>''')}
 
+{section(rail("The report", "Illustrative"), profile_figure())}
+
 {section(rail("Taking the Beta", "Open through the winter"), f'''<div class="prose">
 <p>The Beta is open through the winter. It is hard from the first items, most people will not clear The Gate, and it takes 45 to 90 minutes on a computer. A quiet hour, a sheet of paper, and a willingness to be stumped are the whole kit.</p>
 <ul class="rules">
@@ -362,7 +490,11 @@ def scan_page(prefix=""):
 
 def visionary_page(prefix=""):
     body = f'''<section class="band band-page">
-{page_head("The publication", "The Visionary")}
+<div class="wrap page-head with-figure">
+<div><p class="eyebrow">The publication</p>
+<h1>The Visionary</h1></div>
+{observer("pub")}
+</div>
 {section('<p class="kicker">Launching March 2027</p>', '''<p class="lede">A publication on psychometrics, written from inside an instrument's calibration.</p>
 <div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
@@ -388,7 +520,7 @@ def about_page(prefix=""):
 <p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one periodical, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
 </div>''')}
 
-{section(rail("The founder"), '''<div class="prose">
+{section(rail("The founder") + observer("abt"), '''<div class="prose">
 <p>The founder goes by Morgan. He came to psychometrics the way most of its enthusiasts do, by finding the testing communities online in early 2025 and reading past the point of casual interest. The Scan began as a question about what the standard batteries leave out, particularly for people with uneven profiles, and became an instrument when no existing test answered it.</p>
 </div>''')}
 
@@ -408,7 +540,7 @@ def about_page(prefix=""):
 def notfound_page():
     # Served by GitHub Pages for any missing path, at any depth, so every link is absolute.
     body = f'''<section class="notfound"><div class="wrap">
-{mark("nf")}
+{observer("nf", with_mark=False)}
 <h1>Nothing at this address.</h1>
 <p>The page may have moved when the site was rebuilt. <a href="/">The home page</a> has everything that exists.</p>
 </div></section>'''
@@ -424,9 +556,11 @@ def series_nav(current_slug, prefix):
 def essay_page(e, index):
     prefix = "../"
     paras = "\n".join(f"<p>{p}</p>" for p in e["paras"])
-    body = f'''<article>
+    body = f'''<div class="progress" aria-hidden="true"><span></span></div>
+<article>
 <header class="essay-head"><div class="wrap">
-<p class="eyebrow">The Calibration Series, {index} of {SERIES_TOTAL}</p>
+<div class="topline"><p class="eyebrow">The Calibration Series, {index} of {SERIES_TOTAL}</p>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch between the navy and paper themes">Read on paper</button></div>
 <h1>{html.escape(e["title"])}</h1>
 <p class="meta">{e["date"]}. Originally posted to <a href="{e["link"]}" rel="noopener">r/cognitiveTesting</a>, where the discussion took place.</p>
 </div></header>
@@ -439,7 +573,8 @@ def essay_page(e, index):
 </div>''')}
 </footer>
 </article>'''
-    return page(e["title"], body, "visionary", prefix, e["summary"], f"essays/{e['slug']}.html")
+    return page(e["title"], body, "visionary", prefix, e["summary"], f"essays/{e['slug']}.html",
+                image=f"assets/og/{e['slug']}.png", themed=True)
 
 # ---------- Build ----------
 
@@ -484,7 +619,7 @@ def build():
             inner = m.group(1)
             art = ("<title>Visionary Systems</title>\n"
                    '<meta name="claude:viewport-fit-sides" content="cover">\n'
-                   + FONTS + "\n<style>\n" + css + "\n</style>\n" + inner + "\n")
+                   + "<style>\n" + css + "\n</style>\n" + inner + "\n")
             content = art
         with open(os.path.join(ART, name), "w", encoding="utf-8") as f:
             f.write(content)

@@ -6,7 +6,18 @@
    archive). Body text is justified with hyphenation above phone width.
    Two lights on the field: gold for the mark, links, actions, and numbers; ion
    blue for labels, thresholds, and the far end of every gradient. Nothing glows
-   that is not meant to be looked at or touched. */
+   that is not meant to be looked at or touched. Spectral is self-hosted
+   (assets/fonts, OFL), with Spectral SC for the small-caps labels. Essay pages
+   offer a paper theme; everything else stays navy. */
+
+/* Fonts */
+
+@font-face { font-family: "Spectral"; font-style: normal; font-weight: 400; font-display: swap; src: url("assets/fonts/spectral-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Spectral"; font-style: italic; font-weight: 400; font-display: swap; src: url("assets/fonts/spectral-latin-400-italic.woff2") format("woff2"); }
+@font-face { font-family: "Spectral"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/spectral-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Spectral"; font-style: normal; font-weight: 600; font-display: swap; src: url("assets/fonts/spectral-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Spectral SC"; font-style: normal; font-weight: 500; font-display: swap; src: url("assets/fonts/spectral-sc-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Spectral SC"; font-style: normal; font-weight: 600; font-display: swap; src: url("assets/fonts/spectral-sc-latin-600-normal.woff2") format("woff2"); }
 
 :root {
   --field: #0A1628;      /* deep navy, page ground */
@@ -27,8 +38,12 @@
   --neon: linear-gradient(90deg, var(--gold), var(--ion));
   --focus: #FFD27A;
 
+  --mark-gold: var(--gold);   /* the ring of the mark */
+  --grain: 0.05;              /* film grain over the field */
+
   --display: "Spectral", Georgia, "Times New Roman", serif;
   --body: "Spectral", Georgia, "Times New Roman", serif;
+  --caps: "Spectral SC", "Spectral", Georgia, serif;
 
   --wide: 84rem;                      /* container for everything */
   --gutter: clamp(16px, 4vw, 56px);   /* side gutters, fluid */
@@ -38,6 +53,30 @@
   --measure-essay: 60rem;             /* reading column on essay pages */
 
   color-scheme: dark;
+}
+
+/* Paper: the essay pages on request. Gold and ion are deepened so they hold
+   contrast as text on a light ground; the mark keeps the kit's light-ground gold. */
+:root[data-theme="paper"] {
+  --field: #F6F2E9;
+  --field-2: #ECE6D8;
+  --field-0: #F6F2E9;
+  --gold: #9A6700;
+  --gold-hot: #7A5200;
+  --gold-deep: #DE9A00;
+  --mark-gold: #DE9A00;
+  --ion: #0E7490;
+  --ion-hot: #0A5A70;
+  --ion-dim: rgba(14, 116, 144, 0.55);
+  --star: #121A2B;
+  --ink: #2A3140;
+  --slate: #5E6878;
+  --line: rgba(18, 26, 43, 0.18);
+  --glow: rgba(222, 154, 0, 0);
+  --glow-ion: rgba(14, 116, 144, 0);
+  --focus: #9A6700;
+  --grain: 0.08;
+  color-scheme: light;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -59,6 +98,19 @@ body {
 }
 main { flex: 1 0 auto; }
 @media (min-width: 900px) { body { font-size: 1.125rem; } }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: var(--grain);
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+  background-size: 240px 240px;
+}
+:root[data-theme="paper"] body::before { mix-blend-mode: multiply; }
 
 ::selection { background: var(--gold); color: var(--field-0); }
 
@@ -91,13 +143,14 @@ em { font-style: italic; }
 
 /* Labels: one style for page eyebrows, section kickers, and archive numbers */
 
-.eyebrow, .kicker, .rail-label, .essays .num {
+.eyebrow, .kicker, .rail-label, .essays .num, .coords dt small, .figure-label {
+  font-family: var(--caps);
   color: var(--ion);
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   font-weight: 500;
   font-style: normal;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-transform: none;
   line-height: 1.5;
 }
 .eyebrow { margin-bottom: 1.1rem; }
@@ -224,6 +277,14 @@ em { font-style: italic; }
   height: 100%;
   display: block;
 }
+.horizon {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: clamp(44px, 6vw, 96px);
+  display: block;
+  pointer-events: none;
+}
 .hero .wrap {
   position: relative;
   display: grid;
@@ -252,6 +313,17 @@ em { font-style: italic; }
   width: min(22rem, 60vw);
   height: auto;
   filter: drop-shadow(0 0 26px var(--glow)) drop-shadow(0 0 70px rgba(255, 184, 48, 0.16));
+}
+.spark { filter: drop-shadow(0 0 3px var(--gold-hot)); }
+@keyframes breathe {
+  from { filter: drop-shadow(0 0 22px var(--glow)) drop-shadow(0 0 60px rgba(255, 184, 48, 0.12)); }
+  to   { filter: drop-shadow(0 0 34px var(--glow)) drop-shadow(0 0 90px rgba(255, 184, 48, 0.22)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-mark .mark { animation: breathe 7s ease-in-out infinite alternate; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spark { display: none; }
 }
 
 .actions {
@@ -286,6 +358,12 @@ em { font-style: italic; }
 
 .page-head { padding-block: 4rem 0; }
 .page-head h1 { max-width: 20ch; }
+.page-head.with-figure { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem 3rem; align-items: end; }
+.page-head.with-figure .observer { width: min(22rem, 100%); margin: 0; }
+@media (min-width: 760px) {
+  .page-head.with-figure { grid-template-columns: minmax(0, 1fr) auto; }
+  .page-head.with-figure .observer { justify-self: end; }
+}
 .page-head + .section { margin-top: 2.2rem; }
 .band-page { padding-block: 0 4.5rem; }
 
@@ -312,7 +390,7 @@ em { font-style: italic; }
 .coords { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 2.5rem; }
 .coords > div { border-top: 1px solid var(--line); padding: 1rem 0 1.1rem; }
 .coords dt { color: var(--star); font-weight: 600; }
-.coords dt small { color: var(--ion); font-weight: 500; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; margin-left: 0.55rem; }
+.coords dt small { margin-left: 0.55rem; }
 .coords dd { margin: 0.25rem 0 0; }
 @media (min-width: 900px) {
   .coords { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -329,6 +407,29 @@ em { font-style: italic; }
   .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: dense; }
   .choices > div:first-child { grid-row: span 2; }
 }
+
+/* The observer: a figure at the eyepiece, drawn in the site's colors */
+
+.observer { margin: 0; }
+.observer svg { display: block; width: 100%; height: auto; }
+.rail .observer { margin-top: 1.4rem; max-width: 15rem; }
+.observer .obs-sky { filter: drop-shadow(0 0 6px var(--glow)); }
+
+/* The profile figure: an illustrative report */
+
+.profile { margin: 0; }
+.profile svg { display: block; width: 100%; max-width: 46rem; height: auto; }
+.profile .ring { fill: none; stroke: var(--line); stroke-width: 1; }
+.profile .axis { stroke: var(--line); stroke-width: 1; }
+.profile .axis-x { stroke: var(--ion-dim); stroke-dasharray: 3 4; }
+.profile .band { fill: var(--ion); fill-opacity: 0.13; }
+.profile .shape { fill: var(--gold); fill-opacity: 0.09; stroke: var(--gold); stroke-width: 2; stroke-linejoin: round; filter: drop-shadow(0 0 6px var(--glow)); }
+.profile .pt { fill: var(--gold-hot); filter: drop-shadow(0 0 4px var(--glow)); }
+.profile .pt-x { fill: var(--field); stroke: var(--gold-hot); stroke-width: 2; }
+.profile text { font-family: var(--body); fill: var(--ink); font-size: 14px; }
+.profile .tier { fill: var(--slate); font-size: 11.5px; font-style: italic; paint-order: stroke; stroke: var(--field); stroke-width: 5px; stroke-linejoin: round; }
+.profile .code { font-family: var(--caps); fill: var(--ion); font-size: 12px; letter-spacing: 0.08em; }
+.profile figcaption { color: var(--slate); font-size: 0.95rem; margin-top: 0.9rem; max-width: var(--measure); }
 
 /* Tier map */
 
@@ -371,7 +472,28 @@ em { font-style: italic; }
 /* Essay pages */
 
 .essay-head { padding-block: 3.8rem 2.2rem; border-bottom: 1px solid var(--line); }
-.essay-head h1 { font-size: clamp(2.1rem, 1.2rem + 3.2vw, 4rem); max-width: 26ch; }
+.essay-head .topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.8rem 1.5rem; margin-bottom: 1.1rem; }
+.essay-head .topline .eyebrow { margin-bottom: 0; }
+.theme-toggle {
+  font: inherit;
+  font-family: var(--caps);
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem 0.3rem 0.7rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.theme-toggle::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--glow); }
+.theme-toggle:hover { border-color: var(--ion); color: var(--star); box-shadow: 0 0 14px var(--glow-ion); }
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 4; pointer-events: none; }
+.progress span { display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--neon); box-shadow: 0 0 10px var(--glow-ion); }
+.essay-head h1 { font-size: clamp(2.1rem, 1.2rem + 3.2vw, 4rem); max-width: 32ch; }
 .essay-head .meta { color: var(--slate); margin-top: 1.2rem; font-size: 1rem; }
 .essay-body { padding-block: 2.8rem 3.8rem; }
 .essay-body .prose { max-width: var(--measure-essay); font-size: 1.25rem; line-height: 1.72; }
@@ -429,7 +551,7 @@ em { font-style: italic; }
 /* Not-found page */
 
 .notfound { padding-block: 5rem 6rem; text-align: center; }
-.notfound .mark { width: 7rem; height: 7rem; filter: drop-shadow(0 0 18px var(--glow)); }
+.notfound .observer { width: min(22rem, 80vw); margin-inline: auto; }
 .notfound h1 { margin-top: 1.4rem; }
 .notfound p { margin-top: 1rem; color: var(--ink); }
 
@@ -476,7 +598,7 @@ em { font-style: italic; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .button, .site-nav a, a, .lockup .mark, .essays li::before, .contact button { transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease, box-shadow 180ms ease, filter 180ms ease, text-shadow 180ms ease, opacity 180ms ease; }
+  .button, .site-nav a, a, .lockup .mark, .essays li::before, .contact button, .theme-toggle { transition: color 120ms ease, background-color 120ms ease, border-color 120ms ease, box-shadow 180ms ease, filter 180ms ease, text-shadow 180ms ease, opacity 180ms ease; }
 }
 
 /* Print: essays on paper */
@@ -484,7 +606,7 @@ em { font-style: italic; }
 @media print {
   html { font-size: 11.5pt; }
   body { background: #fff; color: #111; display: block; }
-  .site-header, .site-footer, .hero canvas, .hero::before, .rail, .essay-foot, .actions, .contact button { display: none !important; }
+  .site-header, .site-footer, .hero canvas, .hero::before, .horizon, .rail, .essay-foot, .actions, .contact button, .theme-toggle, .progress, body::before { display: none !important; }
   .hero { background: none; border: 0; }
   .section { display: block; }
   .prose p { text-align: left; hyphens: manual; }

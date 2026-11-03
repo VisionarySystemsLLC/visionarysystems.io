@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>try{if(localStorage.getItem("vs-theme")==="paper")document.documentElement.setAttribute("data-theme","paper")}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Timing pressure conflates speed with ability, so let&#x27;s get rid of it</title>
@@ -15,14 +16,14 @@
 <meta property="og:title" content="Timing pressure conflates speed with ability, so let&#x27;s get rid of it">
 <meta property="og:description" content="The case for removing the clock: what timing constraints actually reward, what the establishment has already conceded, and what an untimed instrument costs in return.">
 <meta property="og:url" content="https://visionarysystems.io/essays/speed-is-not-ability.html">
-<meta property="og:image" content="https://visionarysystems.io/assets/og-image.png">
+<meta property="og:image" content="https://visionarysystems.io/assets/og/speed-is-not-ability.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Timing pressure conflates speed with ability, so let&#x27;s get rid of it">
 <meta name="twitter:description" content="The case for removing the clock: what timing constraints actually reward, what the establishment has already conceded, and what an untimed instrument costs in return.">
-<meta name="twitter:image" content="https://visionarysystems.io/assets/og-image.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
+<meta name="twitter:image" content="https://visionarysystems.io/assets/og/speed-is-not-ability.png">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-latin-400-normal.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../assets/fonts/spectral-latin-500-normal.woff2">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -33,14 +34,16 @@
 <mask id="gm-h"><rect width="200" height="200" fill="#fff"/><ellipse cx="100" cy="100" rx="19" ry="79" stroke="#000" stroke-width="14" fill="none"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#fff" stroke-width="15" fill="none"/></mask>
 </defs>
 <ellipse cx="100" cy="100" rx="19" ry="79" stroke="var(--star)" stroke-width="6.5" fill="none" mask="url(#rm-h)"/>
-<circle cx="100" cy="100" r="44" stroke="var(--gold)" stroke-width="10" fill="none" mask="url(#gm-h)"/>
+<circle cx="100" cy="100" r="44" stroke="var(--mark-gold, var(--gold))" stroke-width="10" fill="none" mask="url(#gm-h)"/>
 </svg><span class="wordmark">Visionary <span>Systems</span></span></a>
 <nav class="site-nav" aria-label="Site"><a href="../scan.html">The Scan</a><a href="../visionary.html" aria-current="page">The Visionary</a><a href="../about.html">About</a></nav>
 </div></header>
 <main>
+<div class="progress" aria-hidden="true"><span></span></div>
 <article>
 <header class="essay-head"><div class="wrap">
-<p class="eyebrow">The Calibration Series, 4 of 8</p>
+<div class="topline"><p class="eyebrow">The Calibration Series, 4 of 8</p>
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch between the navy and paper themes">Read on paper</button></div>
 <h1>Timing pressure conflates speed with ability, so let&#x27;s get rid of it</h1>
 <p class="meta">November 1, 2026. Originally posted to <a href="https://www.reddit.com/r/cognitiveTesting/comments/1xlng4q/timing_pressure_conflates_speed_with_ability_so/" rel="noopener">r/cognitiveTesting</a>, where the discussion took place.</p>
 </div></header>
@@ -82,7 +85,7 @@
 <mask id="gm-f"><rect width="200" height="200" fill="#fff"/><ellipse cx="100" cy="100" rx="19" ry="79" stroke="#000" stroke-width="14" fill="none"/><path d="M 67.3 129.44 A 44 44 0 0 0 132.7 129.44" stroke="#fff" stroke-width="15" fill="none"/></mask>
 </defs>
 <ellipse cx="100" cy="100" rx="19" ry="79" stroke="var(--star)" stroke-width="6.5" fill="none" mask="url(#rm-f)"/>
-<circle cx="100" cy="100" r="44" stroke="var(--gold)" stroke-width="10" fill="none" mask="url(#gm-f)"/>
+<circle cx="100" cy="100" r="44" stroke="var(--mark-gold, var(--gold))" stroke-width="10" fill="none" mask="url(#gm-f)"/>
 </svg><span class="wordmark">Visionary <span>Systems</span></span></a>
 <div class="colophon">
 <p>Provisional. Norms in calibration.</p>
@@ -129,35 +132,84 @@
       } else { fallback(); }
     });
   });
-  // Deep field behind the hero, drawn once from a fixed seed so it is the same sky every visit.
+  // Deep field behind the hero, laid out from a fixed seed so it is the same sky every visit.
+  // A few stars twinkle; the loop runs only while the hero is on screen and motion is allowed.
   var c = document.getElementById("field");
   if (c && c.getContext) {
-    var ctx = c.getContext("2d");
+    var ctx = c.getContext("2d"), stars = [], W = 0, H = 0, pts = [];
+    var motion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
     function seeded(s) { return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
-    function draw() {
+    function layout() {
       var r = c.getBoundingClientRect();
-      if (!r.width || !r.height) return;
+      if (!r.width || !r.height) return false;
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      c.width = Math.floor(r.width * dpr); c.height = Math.floor(r.height * dpr);
+      W = r.width; H = r.height;
+      c.width = Math.floor(W * dpr); c.height = Math.floor(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, r.width, r.height);
-      var rnd = seeded(1618);
-      var n = Math.round(r.width * r.height / 7000);
+      var rnd = seeded(1618), n = Math.round(W * H / 7000);
+      stars = [];
       for (var i = 0; i < n; i++) {
-        var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
-        ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
-        ctx.fill();
+        var roll = rnd(), x = rnd() * W, y = rnd() * H, s = 0.5 + rnd() * 1.2, a = 0.10 + rnd() * 0.40;
+        var col = roll > 0.95 ? "255,184,48" : roll > 0.85 ? "92,225,255" : "238,242,255";
+        if (roll > 0.85) a = 0.7;
+        stars.push({ x: x, y: y, s: s, c: col, a: a, tw: rnd() < 0.14, ph: rnd() * 6.283, rate: 0.6 + rnd() * 1.2 });
       }
-      var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
-      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
-      for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
-      ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
+      return true;
     }
-    draw();
-    var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });
+    function draw(t) {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < stars.length; i++) {
+        var st = stars[i], a = st.a;
+        if (st.tw && t) a = st.a * (0.6 + 0.4 * Math.sin(t / 1000 * st.rate + st.ph));
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.s, 0, 6.283);
+        ctx.fillStyle = "rgba(" + st.c + "," + a.toFixed(3) + ")"; ctx.fill();
+      }
+      ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
+      for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * W, py = pts[j][1] * H; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
+      ctx.stroke();
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * W, pts[k][1] * H, k === 2 ? 1.8 : 1.3, 0, 6.283); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+    }
+    var visible = true, running = false, last = 0;
+    function loop(t) {
+      if (!running) return;
+      if (t - last > 40) { last = t; draw(t); }
+      requestAnimationFrame(loop);
+    }
+    function start() { if (motion && visible && !document.hidden && !running) { running = true; requestAnimationFrame(loop); } }
+    function stop() { running = false; }
+    if (layout()) draw(0);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(c);
+    }
+    document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+    start();
+    var tm; window.addEventListener("resize", function () { clearTimeout(tm); tm = setTimeout(function () { if (layout()) draw(0); }, 150); });
   }
+  // Reading progress on essay pages.
+  var bar = document.querySelector(".progress span");
+  if (bar) {
+    var ticking = false;
+    function measure() {
+      var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? Math.min(1, d.scrollTop / max) : 0).toFixed(4) + ")";
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(measure); } }, { passive: true });
+    measure();
+  }
+  // Paper or navy on essay pages, remembered in this browser only.
+  var toggles = document.querySelectorAll("[data-theme-toggle]");
+  function label(b) { b.textContent = document.documentElement.getAttribute("data-theme") === "paper" ? "Read on navy" : "Read on paper"; }
+  Array.prototype.forEach.call(toggles, function (b) {
+    label(b);
+    b.addEventListener("click", function () {
+      var paper = document.documentElement.getAttribute("data-theme") === "paper";
+      if (paper) document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", "paper");
+      try { localStorage.setItem("vs-theme", paper ? "navy" : "paper"); } catch (e) {}
+      Array.prototype.forEach.call(toggles, label);
+    });
+  });
 })();
 </script>
 </body>
