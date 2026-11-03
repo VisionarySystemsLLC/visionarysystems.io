@@ -493,11 +493,12 @@ em { font-style: italic; }
 /* Essay archive: two columns on wide screens, a lit rule on hover */
 
 .essays { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 2.5rem; }
-.essays li { position: relative; border-top: 1px solid var(--line); padding: 1.3rem 0 1.5rem; min-width: 0; }
+.essays li { position: relative; border-top: 1px solid var(--line); padding: 1.3rem 1rem 1.5rem; margin-inline: -1rem; min-width: 0; border-radius: 0 0 4px 4px; }
 .essays li::before {
   content: "";
   position: absolute;
   left: 0; right: 0; top: -1px;
+  border-radius: 1px;
   height: 1px;
   background: var(--neon);
   opacity: 0;
@@ -539,7 +540,7 @@ em { font-style: italic; }
 }
 .theme-toggle::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--glow); }
 .theme-toggle:hover { border-color: var(--ion); color: var(--star); box-shadow: 0 0 14px var(--glow-ion); }
-.progress { position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 4; pointer-events: none; }
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 5px; z-index: 4; pointer-events: none; }
 .progress span { display: block; height: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--neon); box-shadow: 0 0 10px var(--glow-ion); }
 .essay-head h1 { max-width: 30ch; }
 .essay-head .meta { color: var(--slate); margin-top: 1.2rem; font-size: 1rem; }

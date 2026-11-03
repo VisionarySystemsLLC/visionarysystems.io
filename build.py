@@ -74,10 +74,10 @@ def profile_figure(short=False):
         t = math.radians(a)
         return (cx + R * r * math.cos(t), cy + R * r * math.sin(t))
     out, tiers = [], []
-    for i, (r, name) in enumerate([(0.33, "The Gate"), (0.66, "The Bridge"), (1.0, "The Zenith")]):
+    for i, (r, name) in enumerate([(0.33, "Gate"), (0.66, "Bridge"), (1.0, "Zenith")]):
         out.append(f'<circle class="ring" cx="{cx}" cy="{cy}" r="{R*r:.1f}"/>')
         # The name follows the lower arc of its ring, left to right, sitting just inside the line.
-        (ax, ay), (bx, by) = pt(118, r), pt(26, r)   # centered on the lower right, where the profile sits lowest
+        (ax, ay), (bx, by) = pt(124, r), pt(56, r)   # the bottom sector, between the Gq and Gi axes, where the profile sits lowest
         out.append(f'<path id="tier-{i}" d="M {ax:.1f} {ay:.1f} A {R*r:.1f} {R*r:.1f} 0 0 0 {bx:.1f} {by:.1f}" fill="none"/>')
         tiers.append(f'<text class="tier" dy="-4"><textPath href="#tier-{i}" startOffset="50%" text-anchor="middle">{name}</textPath></text>')
     for (code, name, a), v in zip(axes, vals):
