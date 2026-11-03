@@ -40,13 +40,14 @@
 <main>
 <article>
 <header class="essay-head"><div class="wrap">
-<div class="prose">
-<p class="series">The Calibration Series, 1 of 4</p>
+<p class="eyebrow">The Calibration Series, 1 of 4</p>
 <h1>What would it actually take to build a defensible high-range test in 2026?</h1>
 <p class="meta">September 1, 2026. Originally posted to <a href="https://www.reddit.com/r/cognitiveTesting/comments/1w4yo2l/what_would_it_actually_take_to_build_a_defensible/" rel="noopener">r/cognitiveTesting</a>, where the discussion took place.</p>
-</div>
 </div></header>
-<div class="essay-body"><div class="wrap"><div class="prose">
+<div class="essay-body">
+<div class="wrap section">
+<div class="rail"><p class="rail-label">In this series</p><ol class="series-nav"><li><a href="../essays/defensible-high-range-test.html" aria-current="page">What would it actually take to build a defensible high-range test in 2026?</a></li><li><a href="../essays/vocabulary-and-g.html">Vocabulary is one of the best measures of g we have, and that is exactly the problem</a></li><li><a href="../essays/calibration-remarks.html">47 started, 8 finished, 6 reached The Zenith: ongoing remarks from calibrating a high-range test</a></li><li><a href="../essays/speed-is-not-ability.html">Timing pressure conflates speed with ability, so let&#x27;s get rid of it</a></li></ol></div>
+<div class="content"><div class="prose">
 <p>A recent thread asking how precise the Mega Society's admission tests actually are got me thinking about this question more broadly. This sub seems to spend a lot of energy debating which high-range tests are legitimate, and I have come to think that is the wrong question. The more useful one is what legitimacy would even require at this point because the requirements have changed considerably in the last few years.</p>
 <p>Four factors have killed the old high-range model.</p>
 <p>The first is norming. Most classic HRTs were normed on self-selected samples ranging from a few dozen to a few thousand volunteers, and their ceilings rest on extrapolating a normal curve well beyond the actual data. Reliability becomes so thin at the tail that a single item can swing an estimate by 10 or 20 points. As such, a one-in-a-million claim would require a million-person reference group that nobody has.</p>
@@ -57,10 +58,17 @@
 <p>Here is my list, offered for argument. It would need original items with a protected pool and a scheduled refresh, since leakage is a matter of when. Its norms would be published as provisional, with the sample described exactly and featuring error bars, until the data earns more confidence. It would run process-level validity checks, because unproctored administration has to detect low-effort and outside-help protocols rather than assume they don't occur. It would stage its difficulty so that the floor doesn't insult general takers and the ceiling doesn't extrapolate past the sample. It would build retest linkage in from the start so that practice effects can be measured instead of debated. Of note, a stated contamination policy belongs on the list as well: the instrument should specify when what elements retire once items inevitably escape.</p>
 <p>Two items on that list have no clean solution that I can see. Tail sampling is one since a general population can be recruited, but one-in-a-thousand level testers cannot be bought, only earned. The arms race is the other since any item type a model can eventually solve puts an expiration date on the instrument that contains it.</p>
 <p>I would like to know which parts of this people think are wrong, naive, or missing. The collective test literacy here is higher than pretty much anywhere else I've seen, so I am curious about the sub's thoughts.</p>
-</div></div></div>
-<footer class="essay-foot"><div class="wrap"><div class="prose">
+</div></div>
+</div>
+</div>
+<footer class="essay-foot">
+<div class="wrap section">
+<div class="rail"></div>
+<div class="content"><div class="prose">
 <p>Part of <a href="../visionary.html">The Visionary</a>. The instrument discussed here is the <a href="../scan.html">Visionary Psychometric Scan</a>, in beta calibration.</p>
-</div></div></footer>
+</div></div>
+</div>
+</footer>
 </article>
 </main>
 <footer class="site-footer"><div class="wrap">
@@ -135,14 +143,14 @@
       for (var i = 0; i < n; i++) {
         var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
         ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
+        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
         ctx.fill();
       }
       var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
       ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
       ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
     }
     draw();
     var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });

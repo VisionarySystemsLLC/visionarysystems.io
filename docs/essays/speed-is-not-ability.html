@@ -40,13 +40,14 @@
 <main>
 <article>
 <header class="essay-head"><div class="wrap">
-<div class="prose">
-<p class="series">The Calibration Series, 4 of 4</p>
+<p class="eyebrow">The Calibration Series, 4 of 4</p>
 <h1>Timing pressure conflates speed with ability, so let&#x27;s get rid of it</h1>
 <p class="meta">November 1, 2026. Originally posted to <a href="https://www.reddit.com/r/cognitiveTesting/comments/1xlng4q/timing_pressure_conflates_speed_with_ability_so/" rel="noopener">r/cognitiveTesting</a>, where the discussion took place.</p>
-</div>
 </div></header>
-<div class="essay-body"><div class="wrap"><div class="prose">
+<div class="essay-body">
+<div class="wrap section">
+<div class="rail"><p class="rail-label">In this series</p><ol class="series-nav"><li><a href="../essays/defensible-high-range-test.html">What would it actually take to build a defensible high-range test in 2026?</a></li><li><a href="../essays/vocabulary-and-g.html">Vocabulary is one of the best measures of g we have, and that is exactly the problem</a></li><li><a href="../essays/calibration-remarks.html">47 started, 8 finished, 6 reached The Zenith: ongoing remarks from calibrating a high-range test</a></li><li><a href="../essays/speed-is-not-ability.html" aria-current="page">Timing pressure conflates speed with ability, so let&#x27;s get rid of it</a></li></ol></div>
+<div class="content"><div class="prose">
 <p>One mainstay of the most seminal cognitive assessments is the inclusion of timing constraints, either on a per-item or per-section basis. Why so?</p>
 <p>The defenders' case for timing is two-fold. First, it further standardizes performance conditions, and, second, it tends to increase g-loading across the broader population. If both of these things are true, shouldn't timing constraints measure ability?</p>
 <p>To rigorously examine that question, a bottom-up approach seems best. What is a timing constraint, and, fundamentally, what does it demand of the tester? As noted above, they are a time limit for either individual items, like in the WAIS series, or for sections, such as in the Old SAT and Old GRE. For cases like the former, the goal is to see if the tester's "horsepower" can propel them to a solution in time. In the latter, this partially applies too, but it also prompts the tester to "manage their time" or, in other words, to strategize.</p>
@@ -60,10 +61,17 @@
 <p>Removing the clock has some downsides, though. Some neurodivergent takers fixate, for example. An untimed item can become a rabbit hole, and I've watched it happen in the data. Unlimited time is also unlimited opportunity to consult a model, which is why the instrument's process-level checks exist. Continuing on, a long, untimed battery fatigues people, as seen in the dropout numbers from my last post. Finally, speed is a legitimate clinical signal in contexts I'm not measuring; a neuropsychologist tracking decline obviously needs it. However, a reasoning instrument does not.</p>
 <p>Decidedly, speed is not ability. Time pressure injects speed variance, which correlates with g without actually being g. In other words, correlation is not causation. Perhaps the most critical implication of this stance is this: the positive manifold is real, but the habit of treating every correlate of g as a component of g is an artifact of the method rather than a finding. That is a piece for another day, though.</p>
 <p>As always, I welcome your thoughts, rebuttals, and questions!</p>
-</div></div></div>
-<footer class="essay-foot"><div class="wrap"><div class="prose">
+</div></div>
+</div>
+</div>
+<footer class="essay-foot">
+<div class="wrap section">
+<div class="rail"></div>
+<div class="content"><div class="prose">
 <p>Part of <a href="../visionary.html">The Visionary</a>. The instrument discussed here is the <a href="../scan.html">Visionary Psychometric Scan</a>, in beta calibration.</p>
-</div></div></footer>
+</div></div>
+</div>
+</footer>
 </article>
 </main>
 <footer class="site-footer"><div class="wrap">
@@ -138,14 +146,14 @@
       for (var i = 0; i < n; i++) {
         var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
         ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
+        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
         ctx.fill();
       }
       var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
       ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
       ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
     }
     draw();
     var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });

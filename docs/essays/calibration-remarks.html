@@ -40,13 +40,14 @@
 <main>
 <article>
 <header class="essay-head"><div class="wrap">
-<div class="prose">
-<p class="series">The Calibration Series, 3 of 4</p>
+<p class="eyebrow">The Calibration Series, 3 of 4</p>
 <h1>47 started, 8 finished, 6 reached The Zenith: ongoing remarks from calibrating a high-range test</h1>
 <p class="meta">September 23, 2026. Originally posted to <a href="https://www.reddit.com/r/cognitiveTesting/comments/1wodi1p/47_started_8_finished_6_reached_the_zenith/" rel="noopener">r/cognitiveTesting</a>, where the discussion took place.</p>
-</div>
 </div></header>
-<div class="essay-body"><div class="wrap"><div class="prose">
+<div class="essay-body">
+<div class="wrap section">
+<div class="rail"><p class="rail-label">In this series</p><ol class="series-nav"><li><a href="../essays/defensible-high-range-test.html">What would it actually take to build a defensible high-range test in 2026?</a></li><li><a href="../essays/vocabulary-and-g.html">Vocabulary is one of the best measures of g we have, and that is exactly the problem</a></li><li><a href="../essays/calibration-remarks.html" aria-current="page">47 started, 8 finished, 6 reached The Zenith: ongoing remarks from calibrating a high-range test</a></li><li><a href="../essays/speed-is-not-ability.html">Timing pressure conflates speed with ability, so let&#x27;s get rid of it</a></li></ol></div>
+<div class="content"><div class="prose">
 <p>I happened across r/cognitiveTesting in early 2025 and became intrigued by the concept of measuring humans. In addition to intelligence measurement, I also thought the IPIP was cool, and research into the Big 5 has broadened my curiosity on that front since. Concurrently, I thought it would be worthwhile to embark on a quest for self-improvement, and psychometrics facilitated that at the time. I also thought certain aspects of neurodivergent ability were ignored by the current g-loading orthodoxy, so it fit my iconoclastic nature to build my own instrument. This is the third post in a loose series about what that has actually involved.</p>
 <p>I have one note on that orthodoxy since it's a seed for later material I’d love to write about. G-loading is a great tool near the middle of the distribution, because that's where we can verify it. It becomes far less informative as you approach profoundly gifted territory, where the manifold loosens and abilities individuate, which is exactly where verification gets hardest. My suspicion, and one of the things I hope to investigate, is that there's a kind of “manifold variance” at work: neurodivergence and greater neural uniqueness may correspond to greater divergence among intelligences, as if certain neural structures lay the foundation for divergent outcomes in intelligence, personality, and beyond.</p>
 <p>The instrument mentioned earlier is the Visionary Psychometric Scan (VPS), a 36-item, untimed, adaptive reasoning battery currently in beta calibration. It measures five coordinates: fluid reasoning, crystallized density, visuospatial reasoning, quantitative reasoning, and integrative intelligence.</p>
@@ -57,10 +58,17 @@
 <p>The structure front-loads the forms, which can dissuade people from completion, and the data indicates that it is a powerful dissuader indeed. Inside the test and particularly in the test items, I deliberately reduced the visual scaffolding to leave the taker alone with the questions, which runs counter to what makes a test easy to start. I haven't changed either yet, even though I should consider at least shortening the on-ramp.</p>
 <p>In case you take it: it's hard from the first items, plan on 45 to 90 minutes on a computer, most people won't clear The Gate, and the floor of the instrument is not the floor of the person. Details are on my profile if interested.</p>
 <p>On content, the test appears to load semantic reasoning well and hits pattern recognition, structural detection, visuospatial manipulation, and abstract comprehension thoroughly. I do wonder whether analogical thinking is an absence of note, though. It's clearly g-loaded, but I'm not sure whether the other domains capture the same abilities sufficiently in a different form. As with the last two posts, I'd like to know which parts of this folks think are wrong or missing.</p>
-</div></div></div>
-<footer class="essay-foot"><div class="wrap"><div class="prose">
+</div></div>
+</div>
+</div>
+<footer class="essay-foot">
+<div class="wrap section">
+<div class="rail"></div>
+<div class="content"><div class="prose">
 <p>Part of <a href="../visionary.html">The Visionary</a>. The instrument discussed here is the <a href="../scan.html">Visionary Psychometric Scan</a>, in beta calibration.</p>
-</div></div></footer>
+</div></div>
+</div>
+</footer>
 </article>
 </main>
 <footer class="site-footer"><div class="wrap">
@@ -135,14 +143,14 @@
       for (var i = 0; i < n; i++) {
         var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
         ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
+        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
         ctx.fill();
       }
       var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
       ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
       ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
     }
     draw();
     var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });

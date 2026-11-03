@@ -39,7 +39,9 @@ Or send the posted text and permalink to Claude, which does the same steps and p
 ## Everything else
 
 - Site copy lives in `build.py` (home, the Scan, The Visionary, About). Edit there, rebuild, push.
-- Column widths are two tokens at the top of `src/style.css`: `--measure` (interior pages) and `--measure-essay` (essay pages). Paragraphs are justified and hyphenated from 760px up and left-aligned on phones.
+- Widths are tokens at the top of `src/style.css`: `--wide` (the whole container), `--rail` (the heading rail on interior sections), `--measure` (prose inside the content column) and `--measure-essay` (essay pages). Paragraphs are justified and hyphenated from 760px up and left-aligned on phones. The rail layout switches on at 1000px; below that, headings stack above their content.
+- Two accent colors: `--gold` (the mark, links, actions, numbers) and `--ion` (labels, thresholds, the far end of every gradient). Glows use `--glow` and `--glow-ion`.
+- Interior pages are built from `section(rail(...), content)` in `build.py`: the first argument is the heading and its small label, the second is everything beside it.
 - There is no signup form on purpose. Ghost collects subscribers once the publication launches in March 2027; until then the publication page points people to the Reddit account and the contact address. The Calibration Series continues monthly as the precursor.
 - The calibration numbers (47 started, 8 finished, 6 reached The Zenith) are from the September note. Update them in `build.py` when the next note publishes.
 - "Launching March 2027" framing appears in three places in `build.py` (home kicker and paragraph, publication page, first-issue note). Change them together.

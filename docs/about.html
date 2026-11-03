@@ -38,26 +38,42 @@
 <nav class="site-nav" aria-label="Site"><a href="scan.html">The Scan</a><a href="visionary.html">The Visionary</a><a href="about.html" aria-current="page">About</a></nav>
 </div></header>
 <main>
-<section class="band"><div class="wrap">
-<div class="band-head">
+<section class="band band-page">
+<div class="wrap page-head">
+<p class="eyebrow">The company</p>
 <h1>About</h1>
-<p class="lede">Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.</p>
 </div>
+<div class="wrap section">
+<div class="rail"><p class="kicker">Greenville, South Carolina</p></div>
+<div class="content"><p class="lede">Visionary Systems is a one-person psychometrics company in Greenville, South Carolina, founded in 2026.</p>
 <div class="prose">
 <p>The company builds one instrument, the Visionary Psychometric Scan, and publishes one periodical, The Visionary. Both run on the same conviction: measurement earns trust by showing its error bars, treating a score of 105 with the same rigor as a score of 130, and telling people plainly what a result cannot say about them.</p>
+</div></div>
+</div>
 
-<h2>The founder</h2>
+<div class="wrap section">
+<div class="rail"><h2>The founder</h2></div>
+<div class="content"><div class="prose">
 <p>The founder goes by Morgan. He came to psychometrics the way most of its enthusiasts do, by finding the testing communities online in early 2025 and reading past the point of casual interest. The Scan began as a question about what the standard batteries leave out, particularly for people with uneven profiles, and became an instrument when no existing test answered it.</p>
+</div></div>
+</div>
 
-<h2>How this is made</h2>
+<div class="wrap section">
+<div class="rail"><h2>How this is made</h2></div>
+<div class="content"><div class="prose">
 <p>The Scan's items were built with AI assistance and vetted by hand; they are original to the instrument and drawn from no existing test. The writing is drafted with an AI assistant as well. The arguments, the verification, and the decisions are the founder's, and anything on this site that can be checked is meant to be.</p>
+</div></div>
+</div>
 
-<h2>Contact</h2>
+<div class="wrap section">
+<div class="rail"><h2>Contact</h2></div>
+<div class="content"><div class="prose">
 <p>Questions about the Scan, the publication, or the calibration are welcome. Replies come from a person.</p>
 <div class="contact"><code id="contact-email">morgan@visionarysystems.io</code><button type="button" data-copy="morgan@visionarysystems.io" data-target="contact-email">Copy</button></div>
 <p style="margin-top:1.2rem">The founder also writes as <a href="https://www.reddit.com/user/VisionarySystems/" rel="noopener">u/VisionarySystems</a> on Reddit, where The Calibration Series is first published.</p>
+</div></div>
 </div>
-</div></section>
+</section>
 </main>
 <footer class="site-footer"><div class="wrap">
 <div>
@@ -131,14 +147,14 @@
       for (var i = 0; i < n; i++) {
         var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
         ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
+        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
         ctx.fill();
       }
       var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
       ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
       ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
     }
     draw();
     var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });

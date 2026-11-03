@@ -60,12 +60,11 @@
 </div>
 </section>
 
-<section class="band"><div class="wrap">
-<div class="band-head">
-<h2>The Visionary Psychometric Scan</h2>
-<p class="kicker">Beta 2.0, in calibration since July 2026</p>
-</div>
-<div class="facts">
+<section class="band">
+<div class="wrap section">
+<div class="rail"><h2>The Visionary Psychometric Scan</h2>
+<p class="kicker">Beta 2.0, in calibration since July 2026</p></div>
+<div class="content"><div class="facts">
 <div class="fact"><div class="value">36 items, untimed</div><div class="label">Eight options each, paper and pencil allowed, adaptive after the first tier</div></div>
 <div class="fact"><div class="value">Five coordinates</div><div class="label">Fluid, crystallized, visuospatial, quantitative, and integrative reasoning</div></div>
 <div class="fact"><div class="value">Three tiers</div><div class="label">The Gate, The Bridge, and The Zenith, each harder than the last</div></div>
@@ -73,22 +72,22 @@
 <div class="prose">
 <p>The Scan measures reasoning in a high and narrow band and says so. It sets no clock, requires no outside knowledge, and reports the shape of your reasoning rather than a single number. Most people who start it will not clear The Gate, and the report is written with that in mind: the floor of the instrument is not the floor of the person.</p>
 <p><a href="scan.html">Read how the Scan is built, what it measures, and how to take the Beta.</a></p>
+</div></div>
 </div>
-</div></section>
+</section>
 
-<section class="band band-raised"><div class="wrap">
-<div class="band-head">
-<h2>The Visionary</h2>
-<p class="kicker">Launching March 2027</p>
-</div>
-<div class="prose">
+<section class="band band-raised">
+<div class="wrap section">
+<div class="rail"><h2>The Visionary</h2>
+<p class="kicker">Launching March 2027</p></div>
+<div class="content"><div class="prose">
 <p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. It launches in March 2027. Until then, The Calibration Series runs here as its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here with its original date.</p>
 </div>
-<div style="margin-top:1.6rem"><ol class="essays"><li><span class="num">1 of 4</span>
+<ol class="essays"><li><span class="num">1 of 4</span>
 <a class="title" href="essays/defensible-high-range-test.html">What would it actually take to build a defensible high-range test in 2026?</a>
 <div class="meta">September 1, 2026</div>
 <p class="summary">Four factors killed the old high-range model: norming, leakage, practice, and machine solvability. Here is what a defensible instrument would owe in their place.</p></li><li><span class="num">2 of 4</span>
-<a class="title" href="essays/vocabulary-and-g.html">Vocabulary is one of the best measures of g we have, and that is exactly the problem</a>
+<a class="title" href="essays/vocabulary-and-g.html">Vocabulary is one of the best measures of g we have, and that is exactly the problem</a>
 <div class="meta">September 15, 2026</div>
 <p class="summary">Vocabulary is among the most g-loaded subtests in any battery and the most sensitive to education, culture, and age. Both halves are true, and the tension points at what a vocabulary measure should actually count.</p></li><li><span class="num">3 of 4</span>
 <a class="title" href="essays/calibration-remarks.html">47 started, 8 finished, 6 reached The Zenith: ongoing remarks from calibrating a high-range test</a>
@@ -96,16 +95,16 @@
 <p class="summary">The Scan's design, its numbers so far, where people stop, and what building an untimed instrument has actually involved.</p></li><li><span class="num">4 of 4</span>
 <a class="title" href="essays/speed-is-not-ability.html">Timing pressure conflates speed with ability, so let&#x27;s get rid of it</a>
 <div class="meta">November 1, 2026</div>
-<p class="summary">The case for removing the clock: what timing constraints actually reward, what the establishment has already conceded, and what an untimed instrument costs in return.</p></li></ol></div>
-<p style="margin-top:1.4rem"><a href="visionary.html">About the publication, The Scrolls, and how to subscribe.</a></p>
-</div></section>
-
-<section class="band"><div class="wrap">
-<div class="band-head">
-<h2>Calibration, in public</h2>
-<p class="kicker">As of the September calibration note</p>
+<p class="summary">The case for removing the clock: what timing constraints actually reward, what the establishment has already conceded, and what an untimed instrument costs in return.</p></li></ol>
+<p><a href="visionary.html">About the publication, The Scrolls, and how to subscribe.</a></p></div>
 </div>
-<div class="facts">
+</section>
+
+<section class="band">
+<div class="wrap section">
+<div class="rail"><h2>Calibration, in public</h2>
+<p class="kicker">As of the September calibration note</p></div>
+<div class="content"><div class="facts">
 <div class="fact"><div class="value">47</div><div class="label">people had started the Beta</div></div>
 <div class="fact"><div class="value">8</div><div class="label">had completed all 36 items</div></div>
 <div class="fact"><div class="value">6</div><div class="label">had reached The Zenith, and all 6 finished</div></div>
@@ -113,8 +112,9 @@
 <div class="prose">
 <p>Where people stop, how long items take, and what the data says the design got wrong are published as the calibration goes, rather than after it. Nobody publishes their norming in real time; this project does, because the error bars are the product.</p>
 <p><a href="essays/calibration-remarks.html">Read the September calibration note.</a></p>
+</div></div>
 </div>
-</div></section>
+</section>
 </main>
 <footer class="site-footer"><div class="wrap">
 <div>
@@ -188,14 +188,14 @@
       for (var i = 0; i < n; i++) {
         var x = rnd() * r.width, y = rnd() * r.height, s = 0.5 + rnd() * 1.2, roll = rnd();
         ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2);
-        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
+        ctx.fillStyle = roll > 0.95 ? "rgba(255,184,48,0.8)" : roll > 0.85 ? "rgba(92,225,255,0.65)" : "rgba(238,242,255," + (0.10 + rnd() * 0.40).toFixed(2) + ")";
         ctx.fill();
       }
       var pts = [[0.06, 0.28], [0.11, 0.42], [0.16, 0.36], [0.2, 0.55], [0.17, 0.72]];
       ctx.strokeStyle = "rgba(139,154,173,0.22)"; ctx.lineWidth = 0.6; ctx.beginPath();
       for (var j = 0; j < pts.length; j++) { var px = pts[j][0] * r.width, py = pts[j][1] * r.height; if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py); }
       ctx.stroke();
-      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
+      for (var k = 0; k < pts.length; k++) { ctx.beginPath(); ctx.arc(pts[k][0] * r.width, pts[k][1] * r.height, k === 2 ? 1.8 : 1.3, 0, Math.PI * 2); ctx.fillStyle = k === 2 ? "rgba(255,184,48,0.75)" : k === 4 ? "rgba(92,225,255,0.7)" : "rgba(238,242,255,0.6)"; ctx.fill(); }
     }
     draw();
     var t; window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 150); });
