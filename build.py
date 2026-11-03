@@ -12,6 +12,7 @@ FONTS = '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="p
 BETA_URL = "https://research.sc/participant/login/dynamic/3AC727A6-CAA0-4049-9772-535E51EFFEBC"
 REDDIT_PROFILE = "https://www.reddit.com/user/VisionarySystems/"
 EMAIL = "morgan@visionarysystems.io"
+SERIES_TOTAL = 8   # planned length of The Calibration Series; the published count comes from content/essays/
 
 def mark(suffix, cls="mark"):
     return f'''<svg class="{cls}" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
@@ -183,7 +184,7 @@ def subscribe_block():
 def essay_list(prefix):
     items = ""
     for i, e in enumerate(ESSAYS, start=1):
-        items += f'''<li><span class="num">{i} of {len(ESSAYS)}</span>
+        items += f'''<li><span class="num">{i} of {SERIES_TOTAL}</span>
 <a class="title" href="{prefix}essays/{e["slug"]}.html">{html.escape(e["title"])}</a>
 <div class="meta">{e["date"]}</div>
 <p class="summary">{e["summary"]}</p></li>'''
@@ -368,7 +369,7 @@ def visionary_page(prefix=""):
 <p>The Visionary launches in March 2027. The Calibration Series is its precursor: one piece a month about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
 </div>''')}
 
-{section(rail("The Calibration Series", f"{len(ESSAYS)} pieces, one a month"), essay_list(prefix))}
+{section(rail("The Calibration Series", f"{len(ESSAYS)} of {SERIES_TOTAL} published"), essay_list(prefix))}
 
 {section(rail("The Scrolls", "A companion canon"), '''<div class="prose">
 <p>Each quarter, The Visionary reads one text alongside its readers and writes toward it. That companion canon is called The Scrolls, and its first entry is named with the first issue.</p>
@@ -425,7 +426,7 @@ def essay_page(e, index):
     paras = "\n".join(f"<p>{p}</p>" for p in e["paras"])
     body = f'''<article>
 <header class="essay-head"><div class="wrap">
-<p class="eyebrow">The Calibration Series, {index} of {len(ESSAYS)}</p>
+<p class="eyebrow">The Calibration Series, {index} of {SERIES_TOTAL}</p>
 <h1>{html.escape(e["title"])}</h1>
 <p class="meta">{e["date"]}. Originally posted to <a href="{e["link"]}" rel="noopener">r/cognitiveTesting</a>, where the discussion took place.</p>
 </div></header>

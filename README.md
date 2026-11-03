@@ -44,6 +44,8 @@ Or send the posted text and permalink to Claude, which does the same steps and p
 - Interior pages are built from `section(rail(...), content)` in `build.py`: the first argument is the heading and its small label, the second is everything beside it.
 - There is no signup form on purpose. Ghost collects subscribers once the publication launches in March 2027; until then the publication page points people to the Reddit account and the contact address. The Calibration Series continues monthly as the precursor.
 - The calibration numbers (47 started, 8 finished, 6 reached The Zenith) are from the September note. Update them in `build.py` when the next note publishes.
+- `SERIES_TOTAL` in `build.py` is the planned length of The Calibration Series (8). Every "n of 8" on the site reads it; the published count comes from the files in `content/essays/`.
+- The design scales with the screen: the root font size grows from 16px at laptop width to 21px on wide monitors, and everything is measured in rem, so proportions and line lengths hold from a phone to an ultrawide. There is also a print stylesheet for the essays.
 - "Launching March 2027" framing appears in three places in `build.py` (home kicker and paragraph, publication page, first-issue note). Change them together.
 - GitHub Pages settings: source is the `main` branch, folder `/docs`, custom domain `visionarysystems.io`. `docs/CNAME` is written by the build, so never delete it.
 - DNS at the registrar: four `A` records on the apex pointing to 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153, and a `CNAME` for `www` pointing to `visionarysystemsllc.github.io`.
