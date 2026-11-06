@@ -335,7 +335,7 @@ def page_head(eyebrow, h1, lede="", aside=""):
 
 def subscribe_block():
     return f'''<div class="subscribe">
-<p>The Visionary launches in March 2027. The simplest way to hear about the first issue is to follow <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a>, where every piece is announced. If you would rather get one email when it goes out, send a note to the address below and you will be added by hand.</p>
+<p>The Visionary is coming in 2027. The simplest way to hear about the first issue is to follow <a href="{REDDIT_PROFILE}" rel="noopener">u/VisionarySystems</a>, where every piece is announced. If you would rather get one email when it goes out, send a note to the address below and you will be added by hand.</p>
 <div class="contact"><code id="issue-email">{EMAIL}</code><button type="button" data-copy="{EMAIL}" data-target="issue-email">Copy</button></div>
 <p class="note">Your address is used for that one note and nothing else.</p>
 </div>'''
@@ -442,8 +442,8 @@ def index_page(prefix=""):
 </section>
 
 <section class="band band-raised">
-{section(rail("The Visionary", "Launching March 2027"), f'''<div class="prose">
-<p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. It launches in March 2027. Until then, The Calibration Series runs here as its precursor: a series of pieces about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here with their original dates.</p>
+{section(rail("The Visionary", "Coming in 2027"), f'''<div class="prose">
+<p>The Visionary writes about psychometrics, norming, and the questions an instrument raises while it is being built. It is coming in 2027. Until then, The Calibration Series runs here as its precursor: a series of pieces about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here with their original dates.</p>
 </div>
 {essay_list(prefix)}
 <p><a href="{prefix}visionary.html">About the publication, The Scrolls, and how to subscribe.</a></p>''')}
@@ -522,9 +522,9 @@ def scan_page(prefix=""):
 def visionary_page(prefix=""):
     body = f'''<section class="band band-page">
 {page_head("The publication", "The Visionary", "A publication on psychometrics, written from inside an instrument's calibration.", observer("pub"))}
-{section('<p class="kicker">Launching March 2027</p>', '''<div class="prose">
+{section('<p class="kicker">Coming in 2027</p>', '''<div class="prose">
 <p>Most writing about intelligence testing is written by people who have never had to norm anything. The Visionary is written by someone who is in the middle of it, with the dropout tables and the item statistics on the desk. It covers what tests can and can't tell you, which parts of the field's orthodoxy survive contact with data, and what the Scan's own calibration turns up as it goes.</p>
-<p>The Visionary launches in March 2027. The Calibration Series is its precursor: a series of pieces about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
+<p>The Visionary is coming in 2027. The Calibration Series is its precursor: a series of pieces about building and calibrating the Scan, posted first on r/cognitiveTesting, where the arguments get tested in the comments, and archived here. The series runs until launch, and the launch builds on it.</p>
 <p>Visionaries are those who care to look through the instrument, to see beyond.</p>
 </div>''')}
 
@@ -534,10 +534,10 @@ def visionary_page(prefix=""):
 <p>Each quarter, The Visionary reads one text alongside its readers and writes toward it. That companion canon is called The Scrolls, and its first entry is named with the first issue.</p>
 </div>''')}
 
-{section(rail("The first issue", "March 2027"), subscribe_block(), ' id="subscribe"')}
+{section(rail("The first issue", "2027"), subscribe_block(), ' id="subscribe"')}
 </section>'''
     return page("The Visionary", body, "visionary", prefix,
-                "The Visionary is a publication on psychometrics, written from inside the calibration of an untimed reasoning instrument. Launching March 2027, with The Calibration Series as its precursor.", "visionary.html")
+                "The Visionary is a publication on psychometrics, written from inside the calibration of an untimed reasoning instrument. Coming in 2027, with The Calibration Series as its precursor.", "visionary.html")
 
 def about_page(prefix=""):
     body = f'''<section class="band band-page">

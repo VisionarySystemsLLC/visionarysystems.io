@@ -108,7 +108,7 @@ body {{ width: 1200px; height: 630px; }}
 <div>
 <div class="wordmark" style="font-size:30px">Visionary <span>Systems</span></div>
 <div class="tag">What tests can and can't tell you.</div>
-<div class="sub">The Visionary Psychometric Scan, in beta calibration, and The Visionary, launching March 2027.</div>
+<div class="sub">The Visionary Psychometric Scan, in beta calibration, and The Visionary, coming in 2027.</div>
 </div></div></body></html>"""
 
 
