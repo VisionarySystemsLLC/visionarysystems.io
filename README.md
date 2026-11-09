@@ -46,7 +46,7 @@ Or send the posted text and permalink to Claude, which does the same steps and p
 - Interior pages are built from `section(rail(...), content)` in `build.py`: the first argument is the heading and its small label, the second is everything beside it.
 - There is no signup form on purpose. Ghost collects subscribers once the publication launches in 2027; until then the publication page points people to the Reddit account and the contact address. The Calibration Series continues as the precursor until launch.
 - The calibration numbers (47 started, 8 finished, 6 reached The Zenith) are from the September note. Update them in `build.py` when the next note publishes.
-- `SERIES_TOTAL` in `build.py` is the planned length of The Calibration Series (8). Every "n of 8" on the site reads it; the published count comes from the files in `content/essays/`.
+- `SERIES_TOTAL` in `build.py` is the planned length of The Calibration Series (10). Every "n of 8" on the site reads it; the published count comes from the files in `content/essays/`.
 - The design scales with the screen: the root font size grows from 16px at laptop width to 21px on wide monitors, and everything is measured in rem, so proportions and line lengths hold from a phone to an ultrawide. There is also a print stylesheet for the essays.
 - Spectral (300 for page titles, 400, 500, 600) and Spectral SC are self-hosted from `src/assets/fonts/` (OFL license alongside), so nothing loads from Google.
 - Page heads are two columns: eyebrow, title and lede on the left; a figure or facts on the right (`page_head()` in `build.py` takes the right-hand block as its last argument).

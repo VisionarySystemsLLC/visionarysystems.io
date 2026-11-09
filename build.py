@@ -15,7 +15,7 @@ FONTS = fonts("")
 BETA_URL = "https://research.sc/participant/login/dynamic/3AC727A6-CAA0-4049-9772-535E51EFFEBC"
 REDDIT_PROFILE = "https://www.reddit.com/user/VisionarySystems/"
 EMAIL = "morgan@visionarysystems.io"
-SERIES_TOTAL = 8   # planned length of The Calibration Series; the published count comes from content/essays/
+SERIES_TOTAL = 10  # planned length of The Calibration Series; the published count comes from content/essays/
 
 def mark_body(suffix):
     """The mark's masks and strokes, for use inside any SVG (the weave is identical to the kit's mark)."""
