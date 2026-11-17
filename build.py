@@ -452,7 +452,7 @@ def index_page(prefix=""):
 <section class="band">
 {section(rail("Calibration, in public", "As of the September calibration note"), f'''<div class="facts">
 <div class="fact"><div class="value">47</div><div class="label">people had started the Beta</div></div>
-<div class="fact"><div class="value">8</div><div class="label">had completed all 36 items</div></div>
+<div class="fact"><div class="value">8</div><div class="label">had finished the Scan</div></div>
 <div class="fact"><div class="value">6</div><div class="label">had reached The Zenith, and all 6 finished</div></div>
 </div>
 <div class="prose">
